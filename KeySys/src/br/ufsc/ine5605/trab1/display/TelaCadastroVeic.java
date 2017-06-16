@@ -12,6 +12,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
+
+import br.ufsc.ine5605.trab1.controllers.ControladorPrincipal;
 import br.ufsc.ine5605.trab1.controllers.ControladorVeiculo;
 
 public class TelaCadastroVeic extends JFrame {
@@ -147,9 +149,10 @@ public class TelaCadastroVeic extends JFrame {
 				try {
 					ctrlVeiculo.recebeDados(tfPlaca.getText(), tfModelo.getText(), tfMarca.getText(),
 							Integer.parseInt(tfAno.getText()), Integer.parseInt(tfQuilometragem.getText()));
+					ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario().adicionaSeDiretoria(tfPlaca.getText());
 					JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!");
-				} catch (IllegalArgumentException e1) {
-					JOptionPane.showMessageDialog(null, "Preencha todos os campos!");
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage());
 					setVisible(false);
 					dispose();
 				}

@@ -315,6 +315,7 @@ public class ControladorFuncionario extends Controlador implements IRucd {
 					if (verificaCargoDiretoria(f.getCargo()) && !f.getListaDeCarrosLiberados().contains(
 							ControladorPrincipal.getCtrlPrincipal().getCtrlVeiculo().buscarPelaPlaca(placa))) {
 						addPermVeic(f, ControladorPrincipal.getCtrlPrincipal().getCtrlVeiculo().buscarPelaPlaca(placa));
+						telaListVeicFunc.updateData(f.getNumeroMatricula());
 					}
 				}
 			}
