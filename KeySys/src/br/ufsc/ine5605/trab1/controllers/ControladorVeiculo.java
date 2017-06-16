@@ -228,6 +228,10 @@ public class ControladorVeiculo extends Controlador implements IRucd {
 		telaListaVeic.setVisible(true);
 	}
 
+	public void updateTelaListaVeicData() {
+		telaListaVeic.updateData();
+	}
+
 	// Getters & Setters
 
 	public static ControladorVeiculo getCtrlVeiculo() {

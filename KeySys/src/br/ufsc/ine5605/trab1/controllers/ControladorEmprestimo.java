@@ -1,13 +1,13 @@
 package br.ufsc.ine5605.trab1.controllers;
 
 import java.util.ArrayList;
+
 import br.ufsc.ine5605.trab1.display.TelaEmpPrinc;
 import br.ufsc.ine5605.trab1.display.TelaRealEmp;
 import br.ufsc.ine5605.trab1.exceptions.AcessoBloqueadoException;
 import br.ufsc.ine5605.trab1.exceptions.ListaVaziaException;
 import br.ufsc.ine5605.trab1.exceptions.VeiculoException;
 import br.ufsc.ine5605.trab1.objects.Emprestimo;
-import br.ufsc.ine5605.trab1.objects.Funcionario;
 import br.ufsc.ine5605.trab1.objects.Veiculo;
 import br.ufsc.ine5605.trab1.persistencia.EmprestimoDAO;
 
@@ -58,6 +58,7 @@ public class ControladorEmprestimo extends Controlador {
 				codigoDoEmprestimo++;
 				emp.setCodigo(codigoDoEmprestimo);
 				EmprestimoDAO.getEmpDAO().put(emp);
+				ControladorPrincipal.getCtrlPrincipal().getCtrlVeiculo().updateTelaListaVeicData();
 				ControladorPrincipal.getCtrlPrincipal().getCtrlLog()
 						.criaLog("Acesso permitido: Emprestimo realizado com sucesso", numeroMatricula, placa);
 			} else {
