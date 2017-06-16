@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import br.ufsc.ine5605.trab1.controllers.ControladorPrincipal;
 import br.ufsc.ine5605.trab1.controllers.ControladorVeiculo;
 
 public class TelaVeicPrinc extends JFrame {
@@ -107,6 +108,8 @@ public class TelaVeicPrinc extends JFrame {
 				ctrlVeic.telaCadVeic();
 			} else if (e.getActionCommand().equals("AlteraVeiculo")) {
 				ctrlVeic.telaAlteraVeic();
+			} else if (e.getActionCommand().equals("ExcluiVeiculo")) {
+				ControladorPrincipal.getCtrlPrincipal().telaExcluiVeic();
 			}
 		}
 

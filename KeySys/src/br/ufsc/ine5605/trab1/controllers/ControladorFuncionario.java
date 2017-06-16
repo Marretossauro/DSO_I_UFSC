@@ -337,7 +337,7 @@ public class ControladorFuncionario extends Controlador implements IRucd {
 				throw new Exception("Placa Invalida");
 			}
 		} else {
-			throw new ListaVaziaException();
+			throw new ListaVaziaException("Nao existem funcionarios cadastrados");
 		}
 	}
 
