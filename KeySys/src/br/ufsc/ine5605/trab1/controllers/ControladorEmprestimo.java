@@ -49,19 +49,25 @@ public class ControladorEmprestimo extends Controlador {
 			throw new AcessoBloqueadoException("O funcionario esta bloqueado");
 		} else {
 			if (verificaPerm(numeroMatricula, placa)) {
-				Emprestimo emp = new Emprestimo(
-						ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario()
-								.buscarPelaMatricula(numeroMatricula),
-						ControladorPrincipal.getCtrlPrincipal().getCtrlVeiculo().buscarPelaPlaca(placa));
-				ControladorPrincipal.getCtrlPrincipal().getCtrlVeiculo().buscarPelaPlaca(placa)
-						.setDisponibilidade(false);
-				codigoDoEmprestimo++;
-				emp.setCodigo(codigoDoEmprestimo);
-				EmprestimoDAO.getEmpDAO().put(emp);
-				ControladorPrincipal.getCtrlPrincipal().getCtrlVeiculo().updateTelaListaVeicData();
-				ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario().updateTelaListaFuncData();
-				ControladorPrincipal.getCtrlPrincipal().getCtrlLog()
-						.criaLog("Acesso permitido: Emprestimo realizado com sucesso", numeroMatricula, placa);
+				if (ControladorPrincipal.getCtrlPrincipal().getCtrlVeiculo().buscarPelaPlaca(placa).isDisponivel()) {
+					Emprestimo emp = new Emprestimo(
+							ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario()
+									.buscarPelaMatricula(numeroMatricula),
+							ControladorPrincipal.getCtrlPrincipal().getCtrlVeiculo().buscarPelaPlaca(placa));
+					ControladorPrincipal.getCtrlPrincipal().getCtrlVeiculo().buscarPelaPlaca(placa)
+							.setDisponibilidade(false);
+					codigoDoEmprestimo++;
+					emp.setCodigo(codigoDoEmprestimo);
+					EmprestimoDAO.getEmpDAO().put(emp);
+					ControladorPrincipal.getCtrlPrincipal().getCtrlVeiculo().updateTelaListaVeicData();
+					ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario().updateTelaListaFuncData();
+					ControladorPrincipal.getCtrlPrincipal().getCtrlLog()
+							.criaLog("Acesso permitido: Emprestimo realizado com sucesso", numeroMatricula, placa);
+				} else {
+					ControladorPrincipal.getCtrlPrincipal().getCtrlLog().criaLog("O veiculo nao esta disponivel",
+							numeroMatricula, placa);
+					throw new Exception("O veiculo nao esta disponivel");
+				}
 			} else {
 				ControladorPrincipal.getCtrlPrincipal().getCtrlLog().criaLog("O funcionario nao possui permissao",
 						numeroMatricula, placa);
