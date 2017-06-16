@@ -105,6 +105,8 @@ public class TelaVeicPrinc extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			if (e.getActionCommand().equals("CadastraVeiculo")) {
 				ctrlVeic.telaCadVeic();
+			} else if (e.getActionCommand().equals("AlteraVeiculo")) {
+				ctrlVeic.telaAlteraVeic();
 			}
 		}
 

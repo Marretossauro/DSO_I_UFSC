@@ -2,6 +2,7 @@ package br.ufsc.ine5605.trab1.controllers;
 
 import java.util.ArrayList;
 
+import br.ufsc.ine5605.trab1.display.TelaAlterarVeic;
 import br.ufsc.ine5605.trab1.display.TelaCadastroVeic;
 import br.ufsc.ine5605.trab1.display.TelaVeicPrinc;
 //import br.ufsc.ine5605.trab1.display.TelaVeiculo;
@@ -18,6 +19,7 @@ public class ControladorVeiculo extends Controlador implements IRucd {
 	// private TelaVeiculo telaVeiculo;
 	private TelaVeicPrinc telaVeicPrinc;
 	private TelaCadastroVeic telaCadVeic;
+	private TelaAlterarVeic telaAlteraVeic;
 	private static ControladorVeiculo ctrlVeiculo;
 
 	// Constructor
@@ -27,6 +29,7 @@ public class ControladorVeiculo extends Controlador implements IRucd {
 		// telaVeiculo = new TelaVeiculo(this);
 		telaVeicPrinc = new TelaVeicPrinc(this);
 		telaCadVeic = new TelaCadastroVeic(this);
+		telaAlteraVeic = new TelaAlterarVeic(this);
 	}
 
 	// Override methods
@@ -213,6 +216,10 @@ public class ControladorVeiculo extends Controlador implements IRucd {
 		telaCadVeic.setVisible(true);
 	}
 
+	public void telaAlteraVeic() {
+		telaAlteraVeic.setVisible(true);
+	}
+	
 	// Getters & Setters
 
 	public static ControladorVeiculo getCtrlVeiculo() {
