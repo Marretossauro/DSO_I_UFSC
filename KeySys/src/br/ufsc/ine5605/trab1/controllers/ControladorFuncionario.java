@@ -389,8 +389,6 @@ public class ControladorFuncionario extends Controlador implements IRucd {
 					f.getListaDeCarrosLiberados().remove(v);
 					FuncionarioDAO.getFuncDAO().persist();
 					telaListaFunc.updateData();
-				} else {
-					throw new Exception("Funcionario nao possui esta permissao");
 				}
 			} else {
 				throw new ListaVaziaException("O Funcionario nao possui permissoes");

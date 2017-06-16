@@ -2,6 +2,7 @@ package br.ufsc.ine5605.trab1.display;
 
 import java.awt.Container;
 
+
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -11,12 +12,12 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
 import br.ufsc.ine5605.trab1.controllers.ControladorPrincipal;
 
 public class TelaPrincipalGeral extends JFrame {
 
+	private static final long serialVersionUID = -4317675814597596413L;
 	private GerenciadorBotoesGeral buttManager;
 	private ControladorPrincipal ctrlPrinc;
 
@@ -31,8 +32,7 @@ public class TelaPrincipalGeral extends JFrame {
 		super("Sistema Geral");
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-				| UnsupportedLookAndFeelException e) {
+		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());
 		}
 		this.ctrlPrinc = owner;

@@ -1,6 +1,6 @@
 package br.ufsc.ine5605.trab1.display;
 
-import java.awt.Component;
+
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -12,7 +12,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
 import br.ufsc.ine5605.trab1.controllers.ControladorFuncionario;
 import br.ufsc.ine5605.trab1.controllers.ControladorPrincipal;
@@ -36,8 +35,7 @@ public class TelaFuncPrinc extends JFrame {
 		super("Sistema de Funcionarios");
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-				| UnsupportedLookAndFeelException e) {
+		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());
 		}
 		this.ctrlFuncionario = owner;

@@ -1,6 +1,7 @@
 package br.ufsc.ine5605.trab1.display;
 
 import java.awt.Container;
+
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -12,7 +13,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import br.ufsc.ine5605.trab1.controllers.ControladorVeiculo;
 
 public class TelaAlterarVeic extends JFrame {
@@ -41,8 +41,7 @@ public class TelaAlterarVeic extends JFrame {
 		super("Alterar Veiculo");
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-				| UnsupportedLookAndFeelException e) {
+		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());
 		}
 		this.ctrlVeiculo = owner;

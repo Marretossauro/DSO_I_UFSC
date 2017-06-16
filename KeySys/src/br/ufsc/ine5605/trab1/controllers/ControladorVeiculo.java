@@ -1,9 +1,9 @@
 package br.ufsc.ine5605.trab1.controllers;
 
 import java.util.ArrayList;
-
 import br.ufsc.ine5605.trab1.display.TelaAlterarVeic;
 import br.ufsc.ine5605.trab1.display.TelaCadastroVeic;
+import br.ufsc.ine5605.trab1.display.TelaListaVeic;
 import br.ufsc.ine5605.trab1.display.TelaVeicPrinc;
 //import br.ufsc.ine5605.trab1.display.TelaVeiculo;
 import br.ufsc.ine5605.trab1.exceptions.ListaVaziaException;
@@ -20,6 +20,7 @@ public class ControladorVeiculo extends Controlador implements IRucd {
 	private TelaVeicPrinc telaVeicPrinc;
 	private TelaCadastroVeic telaCadVeic;
 	private TelaAlterarVeic telaAlteraVeic;
+	private TelaListaVeic telaListaVeic;
 	private static ControladorVeiculo ctrlVeiculo;
 
 	// Constructor
@@ -30,6 +31,7 @@ public class ControladorVeiculo extends Controlador implements IRucd {
 		telaVeicPrinc = new TelaVeicPrinc(this);
 		telaCadVeic = new TelaCadastroVeic(this);
 		telaAlteraVeic = new TelaAlterarVeic(this);
+		telaListaVeic = new TelaListaVeic(this);
 	}
 
 	// Override methods
@@ -46,9 +48,11 @@ public class ControladorVeiculo extends Controlador implements IRucd {
 			if (!VeiculoDAO.getVeicDAO().getList().isEmpty()) {
 				if (!verificaVeiculoExiste(veic.getPlaca())) {
 					VeiculoDAO.getVeicDAO().put(veic);
+					telaListaVeic.updateData();
 				}
 			} else {
 				VeiculoDAO.getVeicDAO().put(veic);
+				telaListaVeic.updateData();
 			}
 		} else {
 			throw new IllegalArgumentException("Veiculo nulo");
@@ -59,6 +63,7 @@ public class ControladorVeiculo extends Controlador implements IRucd {
 	public void excluir(String placa) throws VeiculoException {
 		if (verificaVeiculoExiste(placa)) {
 			VeiculoDAO.getVeicDAO().remove(placa);
+			telaListaVeic.updateData();
 		} else {
 			throw new VeiculoException("\nVeiculo inexistente");
 		}
@@ -92,6 +97,7 @@ public class ControladorVeiculo extends Controlador implements IRucd {
 				veic.setAno(ano);
 				veic.setQuilometragemAtual(quilometragemAtual);
 				VeiculoDAO.getVeicDAO().persist();
+				telaListaVeic.updateData();
 			} else {
 				throw new ListaVaziaException("\nNao ha veiculos cadastrados");
 			}
@@ -219,7 +225,11 @@ public class ControladorVeiculo extends Controlador implements IRucd {
 	public void telaAlteraVeic() {
 		telaAlteraVeic.setVisible(true);
 	}
-	
+
+	public void telaListaVeic() {
+		telaListaVeic.setVisible(true);
+	}
+
 	// Getters & Setters
 
 	public static ControladorVeiculo getCtrlVeiculo() {
@@ -231,6 +241,12 @@ public class ControladorVeiculo extends Controlador implements IRucd {
 
 	public static void setCtrlVeiculo(ControladorVeiculo ctrlVeiculo) {
 		ControladorVeiculo.ctrlVeiculo = ctrlVeiculo;
+	}
+
+	public VeiculoDAO getVeicDAO() {
+
+		return VeiculoDAO.getVeicDAO();
+
 	}
 
 }
