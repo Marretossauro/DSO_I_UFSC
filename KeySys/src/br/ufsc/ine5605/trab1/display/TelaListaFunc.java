@@ -46,7 +46,7 @@ public class TelaListaFunc extends JFrame {
 		// Table
 
 		updateData();
-		
+
 		container.setLayout(null);
 
 		JScrollPane scrollPane = new JScrollPane();
@@ -76,7 +76,7 @@ public class TelaListaFunc extends JFrame {
 			TipoCargo cargo = f.getCargo();
 			String carroAlugado = "Sem carro";
 			if (ctrlFunc.pegaVeicAlugado(f.getNumeroMatricula()) != null) {
-				carroAlugado = ctrlFunc.pegaVeicAlugado(f.getNumeroMatricula()).getPlaca();
+				carroAlugado = ctrlFunc.pegaVeicAlugado(f.getNumeroMatricula());
 			}
 			Object[] row = { matricula, nome, dataNascimento, telefone, tentativaAcesso, carroAlugado, cargo };
 			tabelaF.addRow(row);

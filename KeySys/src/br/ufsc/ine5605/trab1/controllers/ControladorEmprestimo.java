@@ -59,6 +59,7 @@ public class ControladorEmprestimo extends Controlador {
 				emp.setCodigo(codigoDoEmprestimo);
 				EmprestimoDAO.getEmpDAO().put(emp);
 				ControladorPrincipal.getCtrlPrincipal().getCtrlVeiculo().updateTelaListaVeicData();
+				ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario().updateTelaListaFuncData();
 				ControladorPrincipal.getCtrlPrincipal().getCtrlLog()
 						.criaLog("Acesso permitido: Emprestimo realizado com sucesso", numeroMatricula, placa);
 			} else {

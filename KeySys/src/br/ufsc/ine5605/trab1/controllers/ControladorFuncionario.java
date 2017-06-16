@@ -323,12 +323,12 @@ public class ControladorFuncionario extends Controlador implements IRucd {
 		}
 	}
 
-	public Veiculo pegaVeicAlugado(String numeroMatricula) {
-		if (numeroMatricula != null) {
+	public String pegaVeicAlugado(String numeroMatricula) {
+		if (validadeMatricula(numeroMatricula)) {
 			if (!ControladorPrincipal.getCtrlPrincipal().getCtrlEmprestimo().getEmpDAO().getList().isEmpty()) {
 				for (Emprestimo e : ControladorPrincipal.getCtrlPrincipal().getCtrlEmprestimo().getEmpDAO().getList()) {
 					if (e.getUsuario().getNumeroMatricula().equals(numeroMatricula)) {
-						return e.getUtilitario();
+						return e.getUtilitario().getPlaca();
 					}
 				}
 			}
@@ -412,6 +412,10 @@ public class ControladorFuncionario extends Controlador implements IRucd {
 
 	public void telaListaFunc() {
 		telaListaFunc.setVisible(true);
+	}
+
+	public void updateTelaListaFuncData() {
+		telaListaFunc.updateData();
 	}
 
 	public void telaAlteraFunc() {
