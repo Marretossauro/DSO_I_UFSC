@@ -16,7 +16,6 @@ public class ControladorVeiculo extends Controlador implements IRucd {
 
 	// private ArrayList<Veiculo> listaVeiculos;
 
-	// private TelaVeiculo telaVeiculo;
 	private TelaVeicPrinc telaVeicPrinc;
 	private TelaCadastroVeic telaCadVeic;
 	private TelaAlterarVeic telaAlteraVeic;
@@ -27,7 +26,6 @@ public class ControladorVeiculo extends Controlador implements IRucd {
 
 	public ControladorVeiculo() {
 		super();
-		// telaVeiculo = new TelaVeiculo(this);
 		telaVeicPrinc = new TelaVeicPrinc(this);
 		telaCadVeic = new TelaCadastroVeic(this);
 		telaAlteraVeic = new TelaAlterarVeic(this);

@@ -22,7 +22,6 @@ public class ControladorFuncionario extends Controlador implements IRucd {
 
 	// private ArrayList<Funcionario> listaFuncionarios;
 
-	// private TelaFuncionario telaFuncionario;
 	private TelaFuncPrinc telaFuncPrinc;
 	private TelaCadastroFunc telaCadFunc;
 	private TelaListaFunc telaListaFunc;
@@ -36,7 +35,6 @@ public class ControladorFuncionario extends Controlador implements IRucd {
 
 	public ControladorFuncionario() {
 		super();
-		// telaFuncionario = new TelaFuncionario(this);
 		telaFuncPrinc = new TelaFuncPrinc(this);
 		telaCadFunc = new TelaCadastroFunc(this);
 		telaListaFunc = new TelaListaFunc(this);
@@ -50,7 +48,6 @@ public class ControladorFuncionario extends Controlador implements IRucd {
 
 	@Override
 	public void inicia() {
-		// telaFuncionario.exibeMenuInicial();
 		telaFuncPrinc.setVisible(true);
 	}
 
