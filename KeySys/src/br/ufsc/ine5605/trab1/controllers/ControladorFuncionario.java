@@ -431,6 +431,10 @@ public class ControladorFuncionario extends Controlador implements IRucd {
 		telaListVeicFunc.updateData(numMat);
 	}
 
+	public void updateTelaListVeicFuncData(String numeroMatricula) {
+		telaListVeicFunc.updateData(numeroMatricula);
+	}
+
 	// Getter & Setters
 
 	public FuncionarioDAO getFuncDAO() {
