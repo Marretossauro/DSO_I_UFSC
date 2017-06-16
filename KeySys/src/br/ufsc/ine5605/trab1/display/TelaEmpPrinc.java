@@ -44,9 +44,9 @@ public class TelaEmpPrinc extends JFrame {
 		Container container = getContentPane();
 		container.setLayout(new GridBagLayout());
 		GridBagConstraints constraints = new GridBagConstraints();
-		
+
 		// Rent button
-		
+
 		btEmprestimo = new JButton();
 		btEmprestimo.setActionCommand("Empresta");
 		btEmprestimo.setText("Realiza Emprestimo");
@@ -55,9 +55,9 @@ public class TelaEmpPrinc extends JFrame {
 		constraints.gridx = 0;
 		constraints.gridy = 0;
 		container.add(btEmprestimo, constraints);
-		
+
 		// Return car button
-		
+
 		btDevolver = new JButton();
 		btDevolver.setActionCommand("Devolve");
 		btDevolver.setText("Devolve veiculo");
@@ -66,9 +66,9 @@ public class TelaEmpPrinc extends JFrame {
 		constraints.gridx = 0;
 		constraints.gridy = 1;
 		container.add(btDevolver, constraints);
-		
+
 		// List rents button
-		
+
 		btListar = new JButton();
 		btListar.setActionCommand("Lista");
 		btListar.setText("Lista Emprestimos");
@@ -77,24 +77,24 @@ public class TelaEmpPrinc extends JFrame {
 		constraints.gridx = 0;
 		constraints.gridy = 2;
 		container.add(btListar, constraints);
-		
-		// JFrame configuration 
-		
+
+		// JFrame configuration
+
 		setSize(500, 500);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
-		
+
 	}
 
 	private class GeradorBotoesEmpPrinc implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if(e.getActionCommand().equals("Empresta")) {
-				
+			if (e.getActionCommand().equals("Empresta")) {
+				ctrlEmp.telaRE();
 			}
 		}
-		
+
 	}
-	
+
 }

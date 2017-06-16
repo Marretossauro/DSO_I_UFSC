@@ -329,6 +329,7 @@ public class ControladorFuncionario extends Controlador implements IRucd {
 				for (Funcionario f : FuncionarioDAO.getFuncDAO().getList()) {
 					delPermVeic(f, ControladorPrincipal.getCtrlPrincipal().getCtrlVeiculo().buscarPelaPlaca(placa));
 					FuncionarioDAO.getFuncDAO().persist();
+					telaListVeicFunc.updateData(f.getNumeroMatricula());
 				}
 			} else {
 				throw new Exception("Placa Invalida");
@@ -386,6 +387,7 @@ public class ControladorFuncionario extends Controlador implements IRucd {
 					f.getListaDeCarrosLiberados().remove(v);
 					FuncionarioDAO.getFuncDAO().persist();
 					telaListaFunc.updateData();
+					telaListVeicFunc.updateData(f.getNumeroMatricula());
 				}
 			} else {
 				throw new ListaVaziaException("O Funcionario nao possui permissoes");

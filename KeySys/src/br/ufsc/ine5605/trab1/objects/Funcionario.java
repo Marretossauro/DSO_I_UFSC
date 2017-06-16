@@ -13,6 +13,7 @@ public class Funcionario extends Pessoa implements Serializable {
 	private TipoCargo cargo;
 	private ArrayList<Veiculo> listaDeCarrosLiberados;
 	private int tentativas;
+	private boolean bloqueado;
 
 	// Constructors
 
@@ -21,6 +22,7 @@ public class Funcionario extends Pessoa implements Serializable {
 		this.numeroMatricula = numeroMatricula;
 		this.listaDeCarrosLiberados = new ArrayList<>();
 		this.tentativas = 0;
+		this.bloqueado = false;
 	}
 
 	// Getters & Setters
@@ -54,6 +56,14 @@ public class Funcionario extends Pessoa implements Serializable {
 	}
 
 	// Add & Delete methods
+
+	public boolean isBloqueado() {
+		return bloqueado;
+	}
+
+	public void setBloqueado(boolean bloqueado) {
+		this.bloqueado = bloqueado;
+	}
 
 	public void addTentativa() {
 		this.tentativas++;
