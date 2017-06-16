@@ -323,22 +323,6 @@ public class ControladorFuncionario extends Controlador implements IRucd {
 		}
 	}
 
-	public void removeVeiculoDosFuncionarios(String placa) throws Exception {
-		if (!FuncionarioDAO.getFuncDAO().getList().isEmpty()) {
-			if (ControladorPrincipal.getCtrlPrincipal().getCtrlVeiculo().validadePlaca(placa)) {
-				for (Funcionario f : FuncionarioDAO.getFuncDAO().getList()) {
-					delPermVeic(f, ControladorPrincipal.getCtrlPrincipal().getCtrlVeiculo().buscarPelaPlaca(placa));
-					FuncionarioDAO.getFuncDAO().persist();
-					telaListVeicFunc.updateData(f.getNumeroMatricula());
-				}
-			} else {
-				throw new Exception("Placa Invalida");
-			}
-		} else {
-			throw new ListaVaziaException("Nao existem funcionarios cadastrados");
-		}
-	}
-
 	public Veiculo pegaVeicAlugado(String numeroMatricula) {
 		if (numeroMatricula != null) {
 			if (!ControladorPrincipal.getCtrlPrincipal().getCtrlEmprestimo().getEmpDAO().getList().isEmpty()) {
@@ -388,12 +372,35 @@ public class ControladorFuncionario extends Controlador implements IRucd {
 					FuncionarioDAO.getFuncDAO().persist();
 					telaListaFunc.updateData();
 					telaListVeicFunc.updateData(f.getNumeroMatricula());
+				} else {
+					throw new Exception("O funcionario nao possui esta permissao");
 				}
 			} else {
 				throw new ListaVaziaException("O Funcionario nao possui permissoes");
 			}
 		} else {
 			throw new IllegalArgumentException("Funcionario ou Veiculo nulo");
+		}
+	}
+
+	public void delPermVeicAll(String placa) throws Exception {
+		if (ControladorPrincipal.getCtrlPrincipal().getCtrlVeiculo().validadePlaca(placa)) {
+			if (!FuncionarioDAO.getFuncDAO().getList().isEmpty()) {
+				for (Funcionario f : FuncionarioDAO.getFuncDAO().getList()) {
+					if (f.getListaDeCarrosLiberados().contains(
+							ControladorPrincipal.getCtrlPrincipal().getCtrlVeiculo().buscarPelaPlaca(placa))) {
+						f.getListaDeCarrosLiberados().remove(
+								ControladorPrincipal.getCtrlPrincipal().getCtrlVeiculo().buscarPelaPlaca(placa));
+						FuncionarioDAO.getFuncDAO().persist();
+						telaListaFunc.updateData();
+						telaListVeicFunc.updateData(f.getNumeroMatricula());
+					}
+				}
+			} else {
+				throw new ListaVaziaException("Nao existem funcionarios cadastrados");
+			}
+		} else {
+			throw new IllegalArgumentException("Placa invalida");
 		}
 	}
 

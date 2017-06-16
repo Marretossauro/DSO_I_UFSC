@@ -82,7 +82,7 @@ public class TelaExcluirVeic extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			if (e.getActionCommand().equals("Deletar")) {
 				try {
-					ctrlPrinc.getCtrlFuncionario().removeVeiculoDosFuncionarios(tfPlac.getText());
+					ctrlPrinc.getCtrlFuncionario().delPermVeicAll(tfPlac.getText());
 					ctrlPrinc.getCtrlVeiculo().excluir(tfPlac.getText());
 					JOptionPane.showMessageDialog(null, "Veiculo excluido com sucesso!");
 				} catch (Exception e1) {
