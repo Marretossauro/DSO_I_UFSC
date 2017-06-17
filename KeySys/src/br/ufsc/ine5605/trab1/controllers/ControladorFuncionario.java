@@ -311,6 +311,16 @@ public class ControladorFuncionario extends Controlador implements IRucd {
 
 	// Void & Direct Object methods
 
+	public void adicionaSeDiretor(String numeroMatricula) {
+		if (verificaCargoDiretoria(buscarPelaMatricula(numeroMatricula).getCargo())) {
+			buscarPelaMatricula(numeroMatricula).getListaDeCarrosLiberados()
+					.addAll(ControladorVeiculo.getCtrlVeiculo().getVeicDAO().getList());
+			FuncionarioDAO.getFuncDAO().persist();
+			telaListaFunc.updateData();
+			telaListVeicFunc.updateData(numeroMatricula);
+		}
+	}
+
 	public void adicionaSeDiretoria(String placa) throws Exception {
 		if (!FuncionarioDAO.getFuncDAO().getList().isEmpty()) {
 			if (ControladorPrincipal.getCtrlPrincipal().getCtrlVeiculo().validadePlaca(placa)) {
@@ -318,6 +328,8 @@ public class ControladorFuncionario extends Controlador implements IRucd {
 					if (verificaCargoDiretoria(f.getCargo()) && !f.getListaDeCarrosLiberados().contains(
 							ControladorPrincipal.getCtrlPrincipal().getCtrlVeiculo().buscarPelaPlaca(placa))) {
 						addPermVeic(f.getNumeroMatricula(), placa);
+						FuncionarioDAO.getFuncDAO().persist();
+						telaListaFunc.updateData();
 						telaListVeicFunc.updateData(f.getNumeroMatricula());
 					}
 				}
@@ -358,7 +370,6 @@ public class ControladorFuncionario extends Controlador implements IRucd {
 					FuncionarioDAO.getFuncDAO().persist();
 					telaListaFunc.updateData();
 					telaListVeicFunc.updateData(numeroMatricula);
-					return;
 				} else {
 					throw new Exception("Funcionario ja possui esta permissao");
 				}
@@ -380,7 +391,6 @@ public class ControladorFuncionario extends Controlador implements IRucd {
 					FuncionarioDAO.getFuncDAO().persist();
 					telaListaFunc.updateData();
 					telaListVeicFunc.updateData(numeroMatricula);
-					return;
 				} else {
 					throw new Exception("O funcionario nao possui esta permissao");
 				}
@@ -444,6 +454,7 @@ public class ControladorFuncionario extends Controlador implements IRucd {
 	public void telaListVeicFunc(String numMat) {
 		telaListVeicFunc.init();
 		telaListVeicFunc.updateData(numMat);
+		telaListVeicFunc.setVisible(true);
 	}
 
 	public void updateTelaListVeicFuncData(String numeroMatricula) {

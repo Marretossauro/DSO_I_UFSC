@@ -62,8 +62,8 @@ public class TelaListaLogByPlaca extends JFrame {
 	}
 
 	public void updateData(String placa) {
-		tabelaL.setNumRows(0);
 		try {
+			tabelaL.setNumRows(0);
 			for (Log l : ctrlLog.buscaLogsByPlaca(placa)) {
 				String motivo = l.getMotivo();
 				String mat = l.getNumeroMatricula();
@@ -71,7 +71,6 @@ public class TelaListaLogByPlaca extends JFrame {
 				String data = l.getDataDoLog();
 				Object[] row = { motivo, mat, placaAt, data };
 				tabelaL.addRow(row);
-				setVisible(true);
 			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());

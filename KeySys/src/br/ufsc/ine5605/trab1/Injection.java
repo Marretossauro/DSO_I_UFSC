@@ -47,36 +47,7 @@ public class Injection {
 		ControladorVeiculo.getCtrlVeiculo().cadastrar(v5);
 		ControladorVeiculo.getCtrlVeiculo().cadastrar(v6);
 
-		try {
-			ControladorFuncionario.getCtrlFuncionario().addPermVeic(f.getNumeroMatricula(), v.getPlaca());
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-		try {
-			ControladorFuncionario.getCtrlFuncionario().addPermVeic(f.getNumeroMatricula(), v2.getPlaca());
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-		try {
-			ControladorFuncionario.getCtrlFuncionario().addPermVeic(f.getNumeroMatricula(), v3.getPlaca());
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-		try {
-			ControladorFuncionario.getCtrlFuncionario().addPermVeic(f.getNumeroMatricula(), v4.getPlaca());
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-		try {
-			ControladorFuncionario.getCtrlFuncionario().addPermVeic(f.getNumeroMatricula(), v5.getPlaca());
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-		try {
-			ControladorFuncionario.getCtrlFuncionario().addPermVeic(f.getNumeroMatricula(), v6.getPlaca());
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
+		ControladorFuncionario.getCtrlFuncionario().adicionaSeDiretor(f.getNumeroMatricula());
 
 		try {
 			ControladorFuncionario.getCtrlFuncionario().addPermVeic(f2.getNumeroMatricula(), v.getPlaca());

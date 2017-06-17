@@ -62,8 +62,8 @@ public class TelaListaLogByMat extends JFrame {
 	}
 
 	public void updateData(String numeroMatricula) {
-		tabelaL.setNumRows(0);
 		try {
+			tabelaL.setNumRows(0);
 			for (Log l : ctrlLog.buscaLogsByMatricula(numeroMatricula)) {
 				String motivo = l.getMotivo();
 				String mat = l.getNumeroMatricula();
@@ -71,7 +71,6 @@ public class TelaListaLogByMat extends JFrame {
 				String data = l.getDataDoLog();
 				Object[] row = { motivo, mat, placa, data };
 				tabelaL.addRow(row);
-				setVisible(true);
 			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());

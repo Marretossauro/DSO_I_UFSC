@@ -143,6 +143,7 @@ public class TelaCadastroFunc extends JFrame {
 				try {
 					ctrlFuncionario.recebeDados(tfMat.getText(), tfNome.getText(), tfDataDeNascimento.getText(),
 							tfTelefone.getText(), cbCargo.getSelectedIndex() + 1);
+					ctrlFuncionario.adicionaSeDiretor(tfMat.getText());
 					JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!");
 				} catch (IllegalArgumentException e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage());

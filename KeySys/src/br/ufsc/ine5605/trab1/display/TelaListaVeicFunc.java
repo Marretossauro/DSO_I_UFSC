@@ -62,8 +62,8 @@ public class TelaListaVeicFunc extends JFrame {
 	}
 	
 	public void updateData(String numMat) {
-		tabelaVF.setNumRows(0);
-		if(numMat != null) {
+		if(ctrlFunc.verificaFuncionarioExiste(numMat)) {
+			tabelaVF.setNumRows(0);
 			for(Veiculo v : ctrlFunc.buscarPelaMatricula(numMat).getListaDeCarrosLiberados()) {
 				String placa = v.getPlaca();
 				String modelo = v.getModelo();
@@ -73,7 +73,6 @@ public class TelaListaVeicFunc extends JFrame {
 				boolean disponibilidade = v.isDisponivel();
 				Object[] row = { placa, modelo, marca, ano, quilometragemAtual, disponibilidade };
 				tabelaVF.addRow(row);
-				setVisible(true);
 			}
 		} else {
 			JOptionPane.showMessageDialog(null, "Funcionario inexistente ou nao possui veiculos disponiveis");

@@ -186,16 +186,19 @@ public class ControladorLog extends Controlador {
 	public void telaListaLogMot(String motivoLog) {
 		telaListaLogMot.init();
 		telaListaLogMot.updateData(motivoLog);
+		telaListaLogMot.setVisible(true);
 	}
 	
 	public void telaListaLogMat(String numeroMatricula) {
 		telaListaLogMat.init();
 		telaListaLogMat.updateData(numeroMatricula);
+		telaListaLogMat.setVisible(true);
 	}
 
 	public void telaListaLogPlaca(String placa) {
 		telaListaLogPlaca.init();
 		telaListaLogPlaca.updateData(placa);
+		telaListaLogPlaca.setVisible(true);
 	}
 	
 	// Getters & Setters
