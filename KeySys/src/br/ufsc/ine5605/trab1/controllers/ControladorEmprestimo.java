@@ -82,10 +82,14 @@ public class ControladorEmprestimo extends Controlador {
 						.getTentativas() < 3) {
 					ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario().buscarPelaMatricula(numeroMatricula)
 							.addTentativa();
+					ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario().updateTelaListaFuncData();
 					throw new Exception("O funcionario nao possui esta permissao");
 				} else {
 					ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario().buscarPelaMatricula(numeroMatricula)
 							.setBloqueado(true);
+					ControladorPrincipal.getCtrlPrincipal().getCtrlLog().criaLog("O funcionario esta bloqueado",
+							numeroMatricula, placa);
+					throw new AcessoBloqueadoException("O funcionario esta bloquado");
 				}
 			}
 		}
