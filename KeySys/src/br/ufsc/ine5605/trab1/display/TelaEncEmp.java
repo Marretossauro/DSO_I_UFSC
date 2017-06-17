@@ -16,22 +16,22 @@ import javax.swing.UIManager;
 
 import br.ufsc.ine5605.trab1.controllers.ControladorEmprestimo;
 
-public class TelaRealEmp extends JFrame {
+public class TelaEncEmp extends JFrame {
 
-	private static final long serialVersionUID = 6697069927777431316L;
+	private static final long serialVersionUID = -3449322804388054502L;
 	private ControladorEmprestimo ctrlEmp;
 	private GerenciadorBotoesEmp buttManager;
 
 	// Components
 
 	private JLabel lbMat;
-	private JLabel lbPlac;
+	private JLabel lbCod;
 	private JTextField tfMat;
-	private JTextField tfPlac;
+	private JTextField tfCod;
 	private JButton btOk;
 
-	public TelaRealEmp(ControladorEmprestimo owner) {
-		super("Realiza Emprestimo");
+	public TelaEncEmp(ControladorEmprestimo owner) {
+		super("Encerrar emprestimo");
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (Exception e) {
@@ -62,25 +62,25 @@ public class TelaRealEmp extends JFrame {
 		tfMat.setPreferredSize(new Dimension(100, 20));
 		container.add(tfMat, constraints);
 
-		// Car plate set
+		// Code set
 
-		lbPlac = new JLabel();
-		lbPlac.setText("Placa: ");
+		lbCod = new JLabel();
+		lbCod.setText("Codigo: ");
 		constraints.gridx = 0;
 		constraints.gridy = 1;
-		container.add(lbPlac, constraints);
-		tfPlac = new JTextField();
-		tfPlac.setText("");
+		container.add(lbCod, constraints);
+		tfCod = new JTextField();
+		tfCod.setText("");
 		constraints.gridx = 1;
 		constraints.gridy = 1;
-		tfPlac.setPreferredSize(new Dimension(100, 20));
-		container.add(tfPlac, constraints);
+		tfCod.setPreferredSize(new Dimension(100, 20));
+		container.add(tfCod, constraints);
 
 		// Ok button set
 
 		btOk = new JButton();
-		btOk.setText("Emprestar!");
-		btOk.setActionCommand("Empresta");
+		btOk.setText("Remover!");
+		btOk.setActionCommand("Remove");
 		btOk.addActionListener(buttManager);
 		constraints.gridx = 1;
 		constraints.gridy = 2;
@@ -98,10 +98,10 @@ public class TelaRealEmp extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (e.getActionCommand().equals("Empresta")) {
+			if (e.getActionCommand().equals("Remove")) {
 				try {
-					ctrlEmp.adicionaEmprestimo(tfMat.getText(), tfPlac.getText());
-					JOptionPane.showMessageDialog(null, "Emprestimo realizado com sucesso!");
+					ctrlEmp.encerraEmprestimo(Integer.parseInt(tfCod.getText()));
+					JOptionPane.showMessageDialog(null, "Emprestimo encerrado com sucesso!");
 				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage());
 				}

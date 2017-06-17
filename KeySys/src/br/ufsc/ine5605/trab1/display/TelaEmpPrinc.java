@@ -92,6 +92,10 @@ public class TelaEmpPrinc extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			if (e.getActionCommand().equals("Empresta")) {
 				ctrlEmp.telaRE();
+			} else if (e.getActionCommand().equals("Devolve")) {
+				ctrlEmp.telaEncEmp();
+			} else if (e.getActionCommand().equals("Lista")) {
+				ctrlEmp.telaListaEmp();
 			}
 		}
 

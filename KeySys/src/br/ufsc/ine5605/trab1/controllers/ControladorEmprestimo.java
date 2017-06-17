@@ -3,6 +3,8 @@ package br.ufsc.ine5605.trab1.controllers;
 import java.util.ArrayList;
 
 import br.ufsc.ine5605.trab1.display.TelaEmpPrinc;
+import br.ufsc.ine5605.trab1.display.TelaEncEmp;
+import br.ufsc.ine5605.trab1.display.TelaListaEmp;
 import br.ufsc.ine5605.trab1.display.TelaRealEmp;
 import br.ufsc.ine5605.trab1.exceptions.AcessoBloqueadoException;
 import br.ufsc.ine5605.trab1.exceptions.ListaVaziaException;
@@ -19,6 +21,8 @@ public class ControladorEmprestimo extends Controlador {
 	// private TelaEmprestimo telaEmprestimo;
 	private TelaEmpPrinc telaEmpPrinc;
 	private TelaRealEmp telaRE;
+	private TelaEncEmp telaEncEmp;
+	private TelaListaEmp telaListaEmp;
 	private int codigoDoEmprestimo = 0;
 
 	// Constructor
@@ -29,6 +33,8 @@ public class ControladorEmprestimo extends Controlador {
 		// telaEmprestimo = new TelaEmprestimo(this);
 		telaEmpPrinc = new TelaEmpPrinc(this);
 		telaRE = new TelaRealEmp(this);
+		telaEncEmp = new TelaEncEmp(this);
+		telaListaEmp = new TelaListaEmp(this);
 	}
 
 	// Override method
@@ -59,6 +65,7 @@ public class ControladorEmprestimo extends Controlador {
 					codigoDoEmprestimo++;
 					emp.setCodigo(codigoDoEmprestimo);
 					EmprestimoDAO.getEmpDAO().put(emp);
+					telaListaEmp.updateData();
 					ControladorPrincipal.getCtrlPrincipal().getCtrlVeiculo().updateTelaListaVeicData();
 					ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario().updateTelaListaFuncData();
 					ControladorPrincipal.getCtrlPrincipal().getCtrlLog()
@@ -84,10 +91,13 @@ public class ControladorEmprestimo extends Controlador {
 		}
 	}
 
-	public void encerraEmprestimo(int codigoDoEmprestimo) {
+	public void encerraEmprestimo(int codigoDoEmprestimo) throws Exception {
 		if (verificaEmprestimoExiste(codigoDoEmprestimo)) {
 			buscarPeloCodigo(codigoDoEmprestimo).getUtilitario().setDisponibilidade(true);
 			EmprestimoDAO.getEmpDAO().remove(codigoDoEmprestimo);
+			telaListaEmp.updateData();
+		} else {
+			throw new Exception("Emprestimo nao existente");
 		}
 	}
 
@@ -235,6 +245,14 @@ public class ControladorEmprestimo extends Controlador {
 
 	public void telaRE() {
 		telaRE.setVisible(true);
+	}
+
+	public void telaEncEmp() {
+		telaEncEmp.setVisible(true);
+	}
+
+	public void telaListaEmp() {
+		telaListaEmp.setVisible(true);
 	}
 
 	// Getters & Setters
