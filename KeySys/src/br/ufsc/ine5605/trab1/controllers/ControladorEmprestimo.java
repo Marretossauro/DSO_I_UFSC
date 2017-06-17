@@ -116,6 +116,11 @@ public class ControladorEmprestimo extends Controlador {
 
 	public void encerraEmprestimo(int codigoDoEmprestimo) throws Exception {
 		if (verificaEmprestimoExiste(codigoDoEmprestimo)) {
+			ControladorPrincipal.getCtrlPrincipal().getCtrlLog().criaLog("Veiculo devolvido",
+					buscarPeloCodigo(codigoDoEmprestimo).getUsuario().getNumeroMatricula(),
+					buscarPeloCodigo(codigoDoEmprestimo).getUtilitario().getPlaca());
+			ControladorPrincipal.getCtrlPrincipal().getCtrlLog().getLogDAO().persist();
+			ControladorPrincipal.getCtrlPrincipal().getCtrlLog().updateTelaListaLogData();
 			buscarPeloCodigo(codigoDoEmprestimo).getUtilitario().setDisponibilidade(true);
 			EmprestimoDAO.getEmpDAO().remove(codigoDoEmprestimo);
 			telaListaEmp.updateData();
