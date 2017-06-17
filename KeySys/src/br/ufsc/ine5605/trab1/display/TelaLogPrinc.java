@@ -108,6 +108,8 @@ public class TelaLogPrinc extends JFrame {
 				ctrlLog.telaChamaListaLogMot();
 			} else if (e.getActionCommand().equals("ListaLogMat")) {
 				ctrlLog.telaChamaListaMat();
+			} else if (e.getActionCommand().equals("ListaLogPlac")) {
+				ctrlLog.telaChamaListaPlaca();
 			}
 		}
 

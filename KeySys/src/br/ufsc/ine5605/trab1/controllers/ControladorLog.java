@@ -7,9 +7,11 @@ import java.util.Date;
 
 import br.ufsc.ine5605.trab1.display.TelaChamaLogByMat;
 import br.ufsc.ine5605.trab1.display.TelaChamaLogByMot;
+import br.ufsc.ine5605.trab1.display.TelaChamaLogByPlac;
 import br.ufsc.ine5605.trab1.display.TelaListaLog;
 import br.ufsc.ine5605.trab1.display.TelaListaLogByMat;
 import br.ufsc.ine5605.trab1.display.TelaListaLogByMot;
+import br.ufsc.ine5605.trab1.display.TelaListaLogByPlaca;
 import br.ufsc.ine5605.trab1.display.TelaLogPrinc;
 import br.ufsc.ine5605.trab1.exceptions.ListaVaziaException;
 import br.ufsc.ine5605.trab1.objects.Log;
@@ -24,8 +26,10 @@ public class ControladorLog extends Controlador {
 	private TelaListaLog telaListLog;
 	private TelaChamaLogByMot telaChama;
 	private TelaChamaLogByMat telaChamaMat;
+	private TelaChamaLogByPlac telaChamaPlaca;
 	private TelaListaLogByMat telaListaLogMat;
 	private TelaListaLogByMot telaListaLogMot;
+	private TelaListaLogByPlaca telaListaLogPlaca;
 
 	// Constructor
 
@@ -37,8 +41,10 @@ public class ControladorLog extends Controlador {
 		this.telaListLog = new TelaListaLog(this);
 		this.telaChama = new TelaChamaLogByMot(this);
 		this.telaChamaMat = new TelaChamaLogByMat(this);
+		this.telaChamaPlaca = new TelaChamaLogByPlac(this);
 		this.telaListaLogMat = new TelaListaLogByMat(this);
 		this.telaListaLogMot = new TelaListaLogByMot(this);
+		this.telaListaLogPlaca = new TelaListaLogByPlaca(this);
 	}
 
 	// Override method
@@ -83,7 +89,7 @@ public class ControladorLog extends Controlador {
 		return listaLogsByMotivo;
 	}
 
-	public ArrayList<Log> buscaLogsByMatricula(String numeroMatricula) throws ListaVaziaException {
+	public ArrayList<Log> buscaLogsByMatricula(String numeroMatricula) throws Exception {
 
 		ArrayList<Log> listaLogsByNumMat = new ArrayList<>();
 
@@ -98,11 +104,13 @@ public class ControladorLog extends Controlador {
 			} else {
 				throw new ListaVaziaException("\nNenhum registro foi gerado");
 			}
+		} else {
+			throw new IllegalArgumentException("Funcionario inexistente");
 		}
 		return listaLogsByNumMat;
 	}
 
-	public ArrayList<Log> buscaLogsByPlaca(String placa) throws ListaVaziaException {
+	public ArrayList<Log> buscaLogsByPlaca(String placa) throws Exception {
 
 		ArrayList<Log> listaLogsByPlaca = new ArrayList<>();
 
@@ -117,6 +125,8 @@ public class ControladorLog extends Controlador {
 			} else {
 				throw new ListaVaziaException("\nNenhum registro foi gerado");
 			}
+		} else {
+			throw new IllegalArgumentException("Veiculo inexistente");
 		}
 		return listaLogsByPlaca;
 	}
@@ -169,12 +179,12 @@ public class ControladorLog extends Controlador {
 		telaChamaMat.setVisible(true);
 	}
 	
-	public void telaListaLogMot(String motivoLog) {
-		telaListaLogMot.init();
-		telaListaLogMot.updateData(motivoLog);
+	public void telaChamaListaPlaca() {
+		telaChamaPlaca.setVisible(true);
 	}
 	
-	public void updateTelaListaLogMotData(String motivoLog) {
+	public void telaListaLogMot(String motivoLog) {
+		telaListaLogMot.init();
 		telaListaLogMot.updateData(motivoLog);
 	}
 	
@@ -183,6 +193,11 @@ public class ControladorLog extends Controlador {
 		telaListaLogMat.updateData(numeroMatricula);
 	}
 
+	public void telaListaLogPlaca(String placa) {
+		telaListaLogPlaca.init();
+		telaListaLogPlaca.updateData(placa);
+	}
+	
 	// Getters & Setters
 
 	public static ControladorLog getCtrlLog() {
