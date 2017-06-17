@@ -6,7 +6,7 @@ public class KeySys {
 
 	public static void main(String[] args) {
 
-		Injection.getInjector().injetarCadastros();
+		//Injection.getInjector().injetarCadastros();
 		ControladorPrincipal.getCtrlPrincipal().inicia();
 
 	}

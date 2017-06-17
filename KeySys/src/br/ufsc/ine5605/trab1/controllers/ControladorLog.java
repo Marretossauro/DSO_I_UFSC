@@ -5,8 +5,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import br.ufsc.ine5605.trab1.display.TelaChamaLogByMat;
 import br.ufsc.ine5605.trab1.display.TelaChamaLogByMot;
 import br.ufsc.ine5605.trab1.display.TelaListaLog;
+import br.ufsc.ine5605.trab1.display.TelaListaLogByMat;
 import br.ufsc.ine5605.trab1.display.TelaListaLogByMot;
 import br.ufsc.ine5605.trab1.display.TelaLogPrinc;
 import br.ufsc.ine5605.trab1.exceptions.ListaVaziaException;
@@ -21,6 +23,8 @@ public class ControladorLog extends Controlador {
 	private TelaLogPrinc telaLogPrinc;
 	private TelaListaLog telaListLog;
 	private TelaChamaLogByMot telaChama;
+	private TelaChamaLogByMat telaChamaMat;
+	private TelaListaLogByMat telaListaLogMat;
 	private TelaListaLogByMot telaListaLogMot;
 
 	// Constructor
@@ -32,6 +36,8 @@ public class ControladorLog extends Controlador {
 		this.telaLogPrinc = new TelaLogPrinc(this);
 		this.telaListLog = new TelaListaLog(this);
 		this.telaChama = new TelaChamaLogByMot(this);
+		this.telaChamaMat = new TelaChamaLogByMat(this);
+		this.telaListaLogMat = new TelaListaLogByMat(this);
 		this.telaListaLogMot = new TelaListaLogByMot(this);
 	}
 
@@ -159,6 +165,10 @@ public class ControladorLog extends Controlador {
 		telaChama.setVisible(true);
 	}
 	
+	public void telaChamaListaMat() {
+		telaChamaMat.setVisible(true);
+	}
+	
 	public void telaListaLogMot(String motivoLog) {
 		telaListaLogMot.init();
 		telaListaLogMot.updateData(motivoLog);
@@ -166,6 +176,11 @@ public class ControladorLog extends Controlador {
 	
 	public void updateTelaListaLogMotData(String motivoLog) {
 		telaListaLogMot.updateData(motivoLog);
+	}
+	
+	public void telaListaLogMat(String numeroMatricula) {
+		telaListaLogMat.init();
+		telaListaLogMat.updateData(numeroMatricula);
 	}
 
 	// Getters & Setters
