@@ -52,6 +52,7 @@ public class ControladorEmprestimo extends Controlador {
 				.isBloqueado()) {
 			ControladorPrincipal.getCtrlPrincipal().getCtrlLog().criaLog("O funcionario esta bloqueado",
 					numeroMatricula, placa);
+			ControladorPrincipal.getCtrlPrincipal().getCtrlLog().updateTelaListaLogData();
 			throw new AcessoBloqueadoException("O funcionario esta bloqueado");
 		} else {
 			if (verificaPerm(numeroMatricula, placa)) {
@@ -70,14 +71,17 @@ public class ControladorEmprestimo extends Controlador {
 					ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario().updateTelaListaFuncData();
 					ControladorPrincipal.getCtrlPrincipal().getCtrlLog()
 							.criaLog("Acesso permitido: Emprestimo realizado com sucesso", numeroMatricula, placa);
+					ControladorPrincipal.getCtrlPrincipal().getCtrlLog().updateTelaListaLogData();
 				} else {
 					ControladorPrincipal.getCtrlPrincipal().getCtrlLog().criaLog("O veiculo nao esta disponivel",
 							numeroMatricula, placa);
+					ControladorPrincipal.getCtrlPrincipal().getCtrlLog().updateTelaListaLogData();
 					throw new Exception("O veiculo nao esta disponivel");
 				}
 			} else {
 				ControladorPrincipal.getCtrlPrincipal().getCtrlLog().criaLog("O funcionario nao possui permissao",
 						numeroMatricula, placa);
+				ControladorPrincipal.getCtrlPrincipal().getCtrlLog().updateTelaListaLogData();
 				if (ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario().buscarPelaMatricula(numeroMatricula)
 						.getTentativas() < 3) {
 					ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario().buscarPelaMatricula(numeroMatricula)
@@ -89,6 +93,7 @@ public class ControladorEmprestimo extends Controlador {
 							.setBloqueado(true);
 					ControladorPrincipal.getCtrlPrincipal().getCtrlLog().criaLog("O funcionario esta bloqueado",
 							numeroMatricula, placa);
+					ControladorPrincipal.getCtrlPrincipal().getCtrlLog().updateTelaListaLogData();
 					throw new AcessoBloqueadoException("O funcionario esta bloquado");
 				}
 			}

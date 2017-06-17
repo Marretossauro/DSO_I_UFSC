@@ -20,9 +20,9 @@ public class TelaLogPrinc extends JFrame {
 	private static final long serialVersionUID = 5364454538366260458L;
 	private GerenciadorBotoesLogPrinc buttManager;
 	private ControladorLog ctrlLog;
-	
+
 	// Components
-	
+
 	private JButton btListaTd;
 	private JButton btListaMot;
 	private JButton btListaMat;
@@ -39,15 +39,15 @@ public class TelaLogPrinc extends JFrame {
 		this.buttManager = new GerenciadorBotoesLogPrinc();
 		init();
 	}
-	
+
 	private void init() {
-		
+
 		Container container = getContentPane();
 		container.setLayout(new GridBagLayout());
 		GridBagConstraints constraints = new GridBagConstraints();
-		
+
 		// List all logs button
-		
+
 		btListaTd = new JButton();
 		btListaTd.setActionCommand("ListaTdsLogs");
 		btListaTd.setText("Lista Todos Registros");
@@ -56,9 +56,9 @@ public class TelaLogPrinc extends JFrame {
 		constraints.gridx = 0;
 		constraints.gridy = 0;
 		container.add(btListaTd, constraints);
-		
+
 		// List logs by motive
-		
+
 		btListaMot = new JButton();
 		btListaMot.setActionCommand("ListaLogMot");
 		btListaMot.setText("Lista Registro por Motivo");
@@ -67,9 +67,9 @@ public class TelaLogPrinc extends JFrame {
 		constraints.gridx = 0;
 		constraints.gridy = 1;
 		container.add(btListaMot, constraints);
-		
+
 		// List logs by register
-		
+
 		btListaMat = new JButton();
 		btListaMat.setActionCommand("ListaLogMat");
 		btListaMat.setText("Lista Registro por Matricula");
@@ -78,9 +78,9 @@ public class TelaLogPrinc extends JFrame {
 		constraints.gridx = 0;
 		constraints.gridy = 2;
 		container.add(btListaMat, constraints);
-		
+
 		// List logs by car plate
-		
+
 		btListaPlac = new JButton();
 		btListaPlac.setActionCommand("ListaLogPlac");
 		btListaPlac.setText("Lista Registro por Placa");
@@ -89,24 +89,24 @@ public class TelaLogPrinc extends JFrame {
 		constraints.gridx = 0;
 		constraints.gridy = 3;
 		container.add(btListaPlac, constraints);
-		
+
 		// JFrame configuration
-		
+
 		setSize(500, 500);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
-		
+
 	}
-	
+
 	private class GerenciadorBotoesLogPrinc implements ActionListener {
-		
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if(e.getActionCommand().equals("ListaTdsLogs")){
-				
+			if (e.getActionCommand().equals("ListaTdsLogs")) {
+				ctrlLog.telaListaLog();
 			}
 		}
-		
+
 	}
 
 }

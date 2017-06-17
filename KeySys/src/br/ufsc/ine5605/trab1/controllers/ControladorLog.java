@@ -3,6 +3,8 @@ package br.ufsc.ine5605.trab1.controllers;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
+import br.ufsc.ine5605.trab1.display.TelaListaLog;
 import br.ufsc.ine5605.trab1.display.TelaLog;
 import br.ufsc.ine5605.trab1.display.TelaLogPrinc;
 import br.ufsc.ine5605.trab1.exceptions.ListaVaziaException;
@@ -15,21 +17,23 @@ public class ControladorLog extends Controlador {
 	private static ControladorLog ctrlLog;
 	private TelaLog telaLog;
 	private TelaLogPrinc telaLogPrinc;
+	private TelaListaLog telaListLog;
 
 	// Constructor
 
 	public ControladorLog() {
 		super();
-		//this.listaLogs = new ArrayList<>();
+		// this.listaLogs = new ArrayList<>();
 		this.telaLog = new TelaLog(this);
 		this.telaLogPrinc = new TelaLogPrinc(this);
+		this.telaListLog = new TelaListaLog(this);
 	}
 
 	// Override method
 
 	@Override
 	public void inicia() {
-		//telaLog.exibeMenuInicial();
+		// telaLog.exibeMenuInicial();
 		telaLogPrinc.setVisible(true);
 	}
 
@@ -135,6 +139,16 @@ public class ControladorLog extends Controlador {
 		return listaDeLog;
 	}
 
+	// Window method
+
+	public void telaListaLog() {
+		telaListLog.setVisible(true);
+	}
+
+	public void updateTelaListaLogData() {
+		telaListLog.updateData();
+	}
+
 	// Getters & Setters
 
 	public static ControladorLog getCtrlLog() {
@@ -147,9 +161,13 @@ public class ControladorLog extends Controlador {
 	public static void setCtrlLog(ControladorLog ctrlLog) {
 		ControladorLog.ctrlLog = ctrlLog;
 	}
-	
+
 	public ArrayList<Log> getListaLogs() {
 		return new ArrayList<Log>(LogDAO.getlogDAO().getList());
+	}
+
+	public LogDAO getLogDAO() {
+		return LogDAO.getlogDAO();
 	}
 
 }
