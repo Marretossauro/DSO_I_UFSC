@@ -7,6 +7,7 @@ import br.ufsc.ine5605.trab1.display.TelaEncEmp;
 import br.ufsc.ine5605.trab1.display.TelaListaEmp;
 import br.ufsc.ine5605.trab1.display.TelaRealEmp;
 import br.ufsc.ine5605.trab1.exceptions.AcessoBloqueadoException;
+import br.ufsc.ine5605.trab1.exceptions.FuncionarioException;
 import br.ufsc.ine5605.trab1.exceptions.ListaVaziaException;
 import br.ufsc.ine5605.trab1.exceptions.VeiculoException;
 import br.ufsc.ine5605.trab1.objects.Emprestimo;
@@ -48,45 +49,68 @@ public class ControladorEmprestimo extends Controlador {
 	// Create, end and list methods
 
 	public void adicionaEmprestimo(String numeroMatricula, String placa) throws Exception {
-		if(verificaPerm(numeroMatricula, placa) && ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario().buscarPelaMatricula(numeroMatricula).getTentativas() < 3) {
-			if(ControladorPrincipal.getCtrlPrincipal().getCtrlVeiculo().buscarPelaPlaca(placa).isDisponivel()) {
-				Emprestimo emp = new Emprestimo(ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario().buscarPelaMatricula(numeroMatricula), ControladorPrincipal.getCtrlPrincipal().getCtrlVeiculo().buscarPelaPlaca(placa));
-				ControladorPrincipal.getCtrlPrincipal().getCtrlVeiculo().buscarPelaPlaca(placa).setDisponibilidade(false);
-				ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario().buscarPelaMatricula(numeroMatricula).setTentativas(0);
-				codigoDoEmprestimo++;
-				emp.setCodigo(codigoDoEmprestimo);
-				EmprestimoDAO.getEmpDAO().put(emp);
-				telaListaEmp.updateData();
-				ControladorPrincipal.getCtrlPrincipal().getCtrlVeiculo().getVeicDAO().persist();
-				ControladorPrincipal.getCtrlPrincipal().getCtrlVeiculo().updateTelaListaVeicData();
-				ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario().getFuncDAO().persist();
-				ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario().updateTelaListaFuncData();
-				ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario().updateTelaListVeicFuncData(numeroMatricula);
-				ControladorPrincipal.getCtrlPrincipal().getCtrlLog().criaLog("Acesso Permitido: Veiculo permitido e disponivel", numeroMatricula, placa);
-				ControladorPrincipal.getCtrlPrincipal().getCtrlLog().getLogDAO().persist();
-				ControladorPrincipal.getCtrlPrincipal().getCtrlLog().updateTelaListaLogData();
+		if (ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario().verificaFuncionarioExiste(numeroMatricula)) {
+			if (ControladorPrincipal.getCtrlPrincipal().getCtrlVeiculo().verificaVeiculoExiste(placa)) {
+				if (verificaPerm(numeroMatricula, placa) && ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario()
+						.buscarPelaMatricula(numeroMatricula).getTentativas() < 3) {
+					if (ControladorPrincipal.getCtrlPrincipal().getCtrlVeiculo().buscarPelaPlaca(placa)
+							.isDisponivel()) {
+						Emprestimo emp = new Emprestimo(
+								ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario()
+										.buscarPelaMatricula(numeroMatricula),
+								ControladorPrincipal.getCtrlPrincipal().getCtrlVeiculo().buscarPelaPlaca(placa));
+						ControladorPrincipal.getCtrlPrincipal().getCtrlVeiculo().buscarPelaPlaca(placa)
+								.setDisponibilidade(false);
+						ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario()
+								.buscarPelaMatricula(numeroMatricula).setTentativas(0);
+						codigoDoEmprestimo++;
+						emp.setCodigo(codigoDoEmprestimo);
+						EmprestimoDAO.getEmpDAO().put(emp);
+						telaListaEmp.updateData();
+						ControladorPrincipal.getCtrlPrincipal().getCtrlVeiculo().getVeicDAO().persist();
+						ControladorPrincipal.getCtrlPrincipal().getCtrlVeiculo().updateTelaListaVeicData();
+						ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario().getFuncDAO().persist();
+						ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario().updateTelaListaFuncData();
+						ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario()
+								.updateTelaListVeicFuncData(numeroMatricula);
+						ControladorPrincipal.getCtrlPrincipal().getCtrlLog()
+								.criaLog("Acesso Permitido: Veiculo permitido e disponivel", numeroMatricula, placa);
+						ControladorPrincipal.getCtrlPrincipal().getCtrlLog().getLogDAO().persist();
+						ControladorPrincipal.getCtrlPrincipal().getCtrlLog().updateTelaListaLogData();
+					} else {
+						ControladorPrincipal.getCtrlPrincipal().getCtrlLog()
+								.criaLog("Acesso Negado: Veiculo indisponivel", numeroMatricula, placa);
+						ControladorPrincipal.getCtrlPrincipal().getCtrlLog().getLogDAO().persist();
+						ControladorPrincipal.getCtrlPrincipal().getCtrlLog().updateTelaListaLogData();
+						throw new Exception("O veiculo nao esta disponivel");
+					}
+				} else {
+					if (ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario()
+							.buscarPelaMatricula(numeroMatricula).getTentativas() < 3) {
+						ControladorPrincipal.getCtrlPrincipal().getCtrlLog().criaLog(
+								"Acesso Negado: O funcionario nao possui esta permissao", numeroMatricula, placa);
+						ControladorPrincipal.getCtrlPrincipal().getCtrlLog().getLogDAO().persist();
+						ControladorPrincipal.getCtrlPrincipal().getCtrlLog().updateTelaListaLogData();
+						ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario()
+								.buscarPelaMatricula(numeroMatricula).addTentativa();
+						ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario().getFuncDAO().persist();
+						ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario().updateTelaListaFuncData();
+						throw new Exception("O Funcionario nao possui permissao para este veiculo");
+					} else {
+						ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario()
+								.buscarPelaMatricula(numeroMatricula).setBloqueado(true);
+						ControladorPrincipal.getCtrlPrincipal().getCtrlLog()
+								.criaLog("Acesso Negado: O Funcionario esta bloqueado", numeroMatricula, placa);
+						ControladorPrincipal.getCtrlPrincipal().getCtrlLog().getLogDAO().persist();
+						ControladorPrincipal.getCtrlPrincipal().getCtrlLog().updateTelaListaLogData();
+						throw new AcessoBloqueadoException("O Funcionario esta bloqueado");
+					}
+				}
 			} else {
-				ControladorPrincipal.getCtrlPrincipal().getCtrlLog().criaLog("Acesso Negado: Veiculo indisponivel", numeroMatricula, placa);
-				ControladorPrincipal.getCtrlPrincipal().getCtrlLog().getLogDAO().persist();
-				ControladorPrincipal.getCtrlPrincipal().getCtrlLog().updateTelaListaLogData();
-				throw new Exception("O veiculo nao esta disponivel");
+				throw new VeiculoException("Veiculo inexistente");
 			}
 		} else {
-			if (ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario().buscarPelaMatricula(numeroMatricula).getTentativas() < 3) {
-				ControladorPrincipal.getCtrlPrincipal().getCtrlLog().criaLog("Acesso Negado: O funcionario nao possui esta permissao", numeroMatricula, placa);
-				ControladorPrincipal.getCtrlPrincipal().getCtrlLog().getLogDAO().persist();
-				ControladorPrincipal.getCtrlPrincipal().getCtrlLog().updateTelaListaLogData();
-				ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario().buscarPelaMatricula(numeroMatricula).addTentativa();
-				ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario().getFuncDAO().persist();
-				ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario().updateTelaListaFuncData();
-				throw new Exception("O Funcionario nao possui permissao para este veiculo");
-			} else {
-				ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario().buscarPelaMatricula(numeroMatricula).setBloqueado(true);
-				ControladorPrincipal.getCtrlPrincipal().getCtrlLog().criaLog("Acesso Negado: O Funcionario esta bloqueado", numeroMatricula, placa);
-				ControladorPrincipal.getCtrlPrincipal().getCtrlLog().getLogDAO().persist();
-				ControladorPrincipal.getCtrlPrincipal().getCtrlLog().updateTelaListaLogData();
-				throw new AcessoBloqueadoException("O Funcionario esta bloqueado");
-			}
+			throw new FuncionarioException("Funcionario inexistente");
 		}
 	}
 

@@ -390,15 +390,17 @@ public class ControladorFuncionario extends Controlador implements IRucd {
 		if (ControladorPrincipal.getCtrlPrincipal().getCtrlVeiculo().validadePlaca(placa)) {
 			if (!FuncionarioDAO.getFuncDAO().getList().isEmpty()) {
 				for (Funcionario f : FuncionarioDAO.getFuncDAO().getList()) {
-					if (f.getListaDeCarrosLiberados().contains(
-							ControladorPrincipal.getCtrlPrincipal().getCtrlVeiculo().buscarPelaPlaca(placa))) {
-						f.getListaDeCarrosLiberados().remove(
-								ControladorPrincipal.getCtrlPrincipal().getCtrlVeiculo().buscarPelaPlaca(placa));
-						FuncionarioDAO.getFuncDAO().persist();
-						telaListaFunc.updateData();
-						telaListVeicFunc.updateData(f.getNumeroMatricula());
+					for (Veiculo v : f.getListaDeCarrosLiberados()) {
+						if (v.getPlaca().equals(placa)) {
+							f.getListaDeCarrosLiberados().remove(
+									ControladorPrincipal.getCtrlPrincipal().getCtrlVeiculo().buscarPelaPlaca(placa));
+							FuncionarioDAO.getFuncDAO().persist();
+							telaListVeicFunc.updateData(f.getNumeroMatricula());
+						}
 					}
 				}
+				FuncionarioDAO.getFuncDAO().persist();
+				telaListaFunc.updateData();	
 			} else {
 				throw new ListaVaziaException("Nao existem funcionarios cadastrados");
 			}

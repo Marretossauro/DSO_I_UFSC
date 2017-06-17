@@ -62,9 +62,8 @@ public class TelaListaVeicFunc extends JFrame {
 	}
 	
 	public void updateData(String numMat) {
-		
 		tabelaVF.setNumRows(0);
-		if(ctrlFunc.buscarPelaMatricula(numMat) != null) {
+		if(numMat != null) {
 			for(Veiculo v : ctrlFunc.buscarPelaMatricula(numMat).getListaDeCarrosLiberados()) {
 				String placa = v.getPlaca();
 				String modelo = v.getModelo();
