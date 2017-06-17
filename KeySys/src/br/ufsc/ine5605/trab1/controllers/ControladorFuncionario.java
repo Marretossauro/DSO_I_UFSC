@@ -11,6 +11,7 @@ import br.ufsc.ine5605.trab1.display.TelaListaFunc;
 import br.ufsc.ine5605.trab1.display.TelaListaVeicFunc;
 import br.ufsc.ine5605.trab1.exceptions.FuncionarioException;
 import br.ufsc.ine5605.trab1.exceptions.ListaVaziaException;
+import br.ufsc.ine5605.trab1.exceptions.VeiculoException;
 import br.ufsc.ine5605.trab1.interfaces.IRucd;
 import br.ufsc.ine5605.trab1.objects.Emprestimo;
 import br.ufsc.ine5605.trab1.objects.Funcionario;
@@ -316,7 +317,7 @@ public class ControladorFuncionario extends Controlador implements IRucd {
 				for (Funcionario f : FuncionarioDAO.getFuncDAO().getList()) {
 					if (verificaCargoDiretoria(f.getCargo()) && !f.getListaDeCarrosLiberados().contains(
 							ControladorPrincipal.getCtrlPrincipal().getCtrlVeiculo().buscarPelaPlaca(placa))) {
-						addPermVeic(f, ControladorPrincipal.getCtrlPrincipal().getCtrlVeiculo().buscarPelaPlaca(placa));
+						addPermVeic(f.getNumeroMatricula(), placa);
 						telaListVeicFunc.updateData(f.getNumeroMatricula());
 					}
 				}
@@ -347,42 +348,47 @@ public class ControladorFuncionario extends Controlador implements IRucd {
 
 	// Add & Remove car permission method
 
-	public void addPermVeic(Funcionario f, Veiculo v) throws Exception {
-		if (f != null && v != null) {
-			if (!f.getListaDeCarrosLiberados().isEmpty()) {
-				if (!f.getListaDeCarrosLiberados().contains(v)) {
-					f.getListaDeCarrosLiberados().add(v);
+	public void addPermVeic(String numeroMatricula, String placa) throws Exception {
+		if (verificaFuncionarioExiste(numeroMatricula)) {
+			if (ControladorPrincipal.getCtrlPrincipal().getCtrlVeiculo().verificaVeiculoExiste(placa)) {
+				if (!buscarPelaMatricula(numeroMatricula).getListaDeCarrosLiberados()
+						.contains(ControladorPrincipal.getCtrlPrincipal().getCtrlVeiculo().buscarPelaPlaca(placa))) {
+					buscarPelaMatricula(numeroMatricula).getListaDeCarrosLiberados()
+							.add(ControladorPrincipal.getCtrlPrincipal().getCtrlVeiculo().buscarPelaPlaca(placa));
 					FuncionarioDAO.getFuncDAO().persist();
 					telaListaFunc.updateData();
+					telaListVeicFunc.updateData(numeroMatricula);
+					return;
 				} else {
 					throw new Exception("Funcionario ja possui esta permissao");
 				}
 			} else {
-				f.getListaDeCarrosLiberados().add(v);
-				FuncionarioDAO.getFuncDAO().persist();
-				telaListaFunc.updateData();
+				throw new VeiculoException("Veiculo inexistente");
 			}
 		} else {
-			throw new IllegalArgumentException("Funcionario ou Veiculo nulo");
+			throw new FuncionarioException("Funcionario inexistente");
 		}
 	}
 
-	public void delPermVeic(Funcionario f, Veiculo v) throws Exception {
-		if (f != null && v != null) {
-			if (!f.getListaDeCarrosLiberados().isEmpty()) {
-				if (f.getListaDeCarrosLiberados().contains(v)) {
-					f.getListaDeCarrosLiberados().remove(v);
+	public void delPermVeic(String numeroMatricula, String placa) throws Exception {
+		if (verificaFuncionarioExiste(numeroMatricula)) {
+			if (ControladorPrincipal.getCtrlPrincipal().getCtrlVeiculo().verificaVeiculoExiste(placa)) {
+				if (buscarPelaMatricula(numeroMatricula).getListaDeCarrosLiberados()
+						.contains(ControladorPrincipal.getCtrlPrincipal().getCtrlVeiculo().buscarPelaPlaca(placa))) {
+					buscarPelaMatricula(numeroMatricula).getListaDeCarrosLiberados()
+							.remove(ControladorPrincipal.getCtrlPrincipal().getCtrlVeiculo().buscarPelaPlaca(placa));
 					FuncionarioDAO.getFuncDAO().persist();
 					telaListaFunc.updateData();
-					telaListVeicFunc.updateData(f.getNumeroMatricula());
+					telaListVeicFunc.updateData(numeroMatricula);
+					return;
 				} else {
 					throw new Exception("O funcionario nao possui esta permissao");
 				}
 			} else {
-				throw new ListaVaziaException("O Funcionario nao possui permissoes");
+				throw new VeiculoException("Veiculo inexistente");
 			}
 		} else {
-			throw new IllegalArgumentException("Funcionario ou Veiculo nulo");
+			throw new FuncionarioException("Funcionario inexistente");
 		}
 	}
 
@@ -400,7 +406,7 @@ public class ControladorFuncionario extends Controlador implements IRucd {
 					}
 				}
 				FuncionarioDAO.getFuncDAO().persist();
-				telaListaFunc.updateData();	
+				telaListaFunc.updateData();
 			} else {
 				throw new ListaVaziaException("Nao existem funcionarios cadastrados");
 			}

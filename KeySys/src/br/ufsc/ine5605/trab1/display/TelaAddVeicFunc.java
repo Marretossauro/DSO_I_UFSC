@@ -108,9 +108,7 @@ public class TelaAddVeicFunc extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			if (e.getActionCommand().equals("Incluir")) {
 				try {
-					ctrlPrinc.getCtrlFuncionario().addPermVeic(
-							ctrlPrinc.getCtrlFuncionario().buscarPelaMatricula(tfMat.getText()),
-							ctrlPrinc.getCtrlVeiculo().buscarPelaPlaca(tfPlac.getText()));
+					ctrlPrinc.getCtrlFuncionario().addPermVeic(tfMat.getText(), tfPlac.getText());
 					JOptionPane.showMessageDialog(null, "Adicionado com sucesso!");
 				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -119,9 +117,7 @@ public class TelaAddVeicFunc extends JFrame {
 				}
 			} else if (e.getActionCommand().equals("Deletar")) {
 				try {
-					ctrlPrinc.getCtrlFuncionario().delPermVeic(
-							ctrlPrinc.getCtrlFuncionario().buscarPelaMatricula(tfMat.getText()),
-							ctrlPrinc.getCtrlVeiculo().buscarPelaPlaca(tfPlac.getText()));
+					ctrlPrinc.getCtrlFuncionario().delPermVeic(tfMat.getText(), tfPlac.getText());
 					JOptionPane.showMessageDialog(null, "Excluido com sucesso!");
 				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage());

@@ -48,78 +48,78 @@ public class Injection {
 		ControladorVeiculo.getCtrlVeiculo().cadastrar(v6);
 
 		try {
-			ControladorFuncionario.getCtrlFuncionario().addPermVeic(f, v);
+			ControladorFuncionario.getCtrlFuncionario().addPermVeic(f.getNumeroMatricula(), v.getPlaca());
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		try {
-			ControladorFuncionario.getCtrlFuncionario().addPermVeic(f, v2);
+			ControladorFuncionario.getCtrlFuncionario().addPermVeic(f.getNumeroMatricula(), v2.getPlaca());
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		try {
-			ControladorFuncionario.getCtrlFuncionario().addPermVeic(f, v3);
+			ControladorFuncionario.getCtrlFuncionario().addPermVeic(f.getNumeroMatricula(), v3.getPlaca());
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		try {
-			ControladorFuncionario.getCtrlFuncionario().addPermVeic(f, v4);
+			ControladorFuncionario.getCtrlFuncionario().addPermVeic(f.getNumeroMatricula(), v4.getPlaca());
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		try {
-			ControladorFuncionario.getCtrlFuncionario().addPermVeic(f, v5);
+			ControladorFuncionario.getCtrlFuncionario().addPermVeic(f.getNumeroMatricula(), v5.getPlaca());
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		try {
-			ControladorFuncionario.getCtrlFuncionario().addPermVeic(f, v6);
+			ControladorFuncionario.getCtrlFuncionario().addPermVeic(f.getNumeroMatricula(), v6.getPlaca());
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 
 		try {
-			ControladorFuncionario.getCtrlFuncionario().addPermVeic(f2, v);
+			ControladorFuncionario.getCtrlFuncionario().addPermVeic(f2.getNumeroMatricula(), v.getPlaca());
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		try {
-			ControladorFuncionario.getCtrlFuncionario().addPermVeic(f2, v2);
+			ControladorFuncionario.getCtrlFuncionario().addPermVeic(f2.getNumeroMatricula(), v2.getPlaca());
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		try {
-			ControladorFuncionario.getCtrlFuncionario().addPermVeic(f2, v3);
+			ControladorFuncionario.getCtrlFuncionario().addPermVeic(f2.getNumeroMatricula(), v3.getPlaca());
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		try {
-			ControladorFuncionario.getCtrlFuncionario().addPermVeic(f3, v);
+			ControladorFuncionario.getCtrlFuncionario().addPermVeic(f3.getNumeroMatricula(), v.getPlaca());
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		try {
-			ControladorFuncionario.getCtrlFuncionario().addPermVeic(f3, v2);
+			ControladorFuncionario.getCtrlFuncionario().addPermVeic(f3.getNumeroMatricula(), v2.getPlaca());
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		try {
-			ControladorFuncionario.getCtrlFuncionario().addPermVeic(f4, v4);
+			ControladorFuncionario.getCtrlFuncionario().addPermVeic(f4.getNumeroMatricula(), v4.getPlaca());
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		try {
-			ControladorFuncionario.getCtrlFuncionario().addPermVeic(f5, v6);
+			ControladorFuncionario.getCtrlFuncionario().addPermVeic(f5.getNumeroMatricula(), v6.getPlaca());
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		try {
-			ControladorFuncionario.getCtrlFuncionario().addPermVeic(f6, v5);
+			ControladorFuncionario.getCtrlFuncionario().addPermVeic(f6.getNumeroMatricula(), v5.getPlaca());
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		try {
-			ControladorFuncionario.getCtrlFuncionario().addPermVeic(f6, v6);
+			ControladorFuncionario.getCtrlFuncionario().addPermVeic(f6.getNumeroMatricula(), v6.getPlaca());
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
