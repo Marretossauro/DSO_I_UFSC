@@ -59,6 +59,8 @@ public class ControladorFuncionario extends Controlador implements IRucd {
 				if (!verificaFuncionarioExiste(func.getNumeroMatricula())) {
 					FuncionarioDAO.getFuncDAO().put(func);
 					telaListaFunc.updateData();
+				} else {
+					throw new IllegalArgumentException("Funcionario existente");
 				}
 			} else {
 				FuncionarioDAO.getFuncDAO().put(func);

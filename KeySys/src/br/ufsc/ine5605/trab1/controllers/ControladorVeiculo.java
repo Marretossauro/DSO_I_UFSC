@@ -47,6 +47,8 @@ public class ControladorVeiculo extends Controlador implements IRucd {
 				if (!verificaVeiculoExiste(veic.getPlaca())) {
 					VeiculoDAO.getVeicDAO().put(veic);
 					telaListaVeic.updateData();
+				} else {
+					throw new IllegalArgumentException("Veiculo existente");
 				}
 			} else {
 				VeiculoDAO.getVeicDAO().put(veic);

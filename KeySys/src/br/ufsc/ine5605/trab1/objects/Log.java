@@ -1,7 +1,10 @@
 package br.ufsc.ine5605.trab1.objects;
 
-public class Log {
+import java.io.Serializable;
 
+public class Log implements Serializable{
+
+	private static final long serialVersionUID = -6552905681316407027L;
 	private String motivo;
 	private String numeroMatricula;
 	private String placa;

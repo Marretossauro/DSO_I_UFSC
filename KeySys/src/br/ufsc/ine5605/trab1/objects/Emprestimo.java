@@ -1,7 +1,10 @@
 package br.ufsc.ine5605.trab1.objects;
 
-public class Emprestimo {
+import java.io.Serializable;
 
+public class Emprestimo implements Serializable{
+
+	private static final long serialVersionUID = 4775297518394110487L;
 	private int codigo;
 	private Funcionario usuario;
 	private Veiculo utilitario;

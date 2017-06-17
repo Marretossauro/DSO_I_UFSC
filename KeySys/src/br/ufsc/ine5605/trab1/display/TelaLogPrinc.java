@@ -104,6 +104,8 @@ public class TelaLogPrinc extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			if (e.getActionCommand().equals("ListaTdsLogs")) {
 				ctrlLog.telaListaLog();
+			} else if (e.getActionCommand().equals("ListaLogMot")) {
+				ctrlLog.telaChamaListaLogMot();
 			}
 		}
 

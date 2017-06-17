@@ -15,21 +15,20 @@ public class LogDAO {
 	private HashMap<String, Log> cacheLog;
 	private String filename = "logs.cla";
 	private static LogDAO logDAO;
-	
-	
+
 	public LogDAO() {
 		super();
 		cacheLog = new HashMap<>();
 		load();
 	}
-	
+
 	private void load() {
 		try {
 			FileInputStream fin = new FileInputStream(filename);
 			ObjectInputStream oi = new ObjectInputStream(fin);
-			
+
 			this.cacheLog = (HashMap<String, Log>) oi.readObject();
-			
+
 			oi.close();
 			fin.close();
 		} catch (ClassNotFoundException e) {
@@ -40,14 +39,14 @@ public class LogDAO {
 			System.out.println(e);
 		}
 	}
-	
+
 	public void put(Log Log) {
-		if(Log != null) {
-			cacheLog.put(Log.getNumeroMatricula(), Log);
+		if (Log != null) {
+			cacheLog.put(Log.getDataDoLog(), Log);
 			persist();
 		}
 	}
-	
+
 	public void persist() {
 		try {
 			FileOutputStream fout = new FileOutputStream(filename);

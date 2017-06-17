@@ -14,7 +14,7 @@ import br.ufsc.ine5605.trab1.controllers.ControladorLog;
 import br.ufsc.ine5605.trab1.objects.Log;
 
 public class TelaListaLogByMot extends JFrame {
-	
+
 	private static final long serialVersionUID = -6727074098724891667L;
 	private ControladorLog ctrlLog;
 
@@ -25,7 +25,7 @@ public class TelaListaLogByMot extends JFrame {
 	private DefaultTableModel tabelaL;
 
 	public TelaListaLogByMot(ControladorLog owner) {
-		super("Tabela de Logs por Motivo");
+		super("Tabela de Registros por Motivo");
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (Exception e) {
@@ -61,19 +61,22 @@ public class TelaListaLogByMot extends JFrame {
 
 	}
 
-	public void updateData(String motivolog) {
+	public void updateData(String motivoLog) {
 		tabelaL.setNumRows(0);
 		try {
-			for (Log l : ctrlLog.buscaLogsByMotivo(motivolog)) {
+			for (Log l : ctrlLog.buscaLogsByMotivo(motivoLog)) {
 				String motivo = l.getMotivo();
 				String mat = l.getNumeroMatricula();
 				String placa = l.getPlaca();
 				String data = l.getDataDoLog();
 				Object[] row = { motivo, mat, placa, data };
 				tabelaL.addRow(row);
+				setVisible(true);
 			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());
+			setVisible(false);
+			dispose();
 		}
 	}
 

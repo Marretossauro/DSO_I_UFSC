@@ -1,11 +1,13 @@
 package br.ufsc.ine5605.trab1.controllers;
 
 import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 import java.util.Date;
 
+import br.ufsc.ine5605.trab1.display.TelaChamaLogByMot;
 import br.ufsc.ine5605.trab1.display.TelaListaLog;
-import br.ufsc.ine5605.trab1.display.TelaLog;
+import br.ufsc.ine5605.trab1.display.TelaListaLogByMot;
 import br.ufsc.ine5605.trab1.display.TelaLogPrinc;
 import br.ufsc.ine5605.trab1.exceptions.ListaVaziaException;
 import br.ufsc.ine5605.trab1.objects.Log;
@@ -15,18 +17,22 @@ public class ControladorLog extends Controlador {
 
 	// private ArrayList<Log> listaLogs;
 	private static ControladorLog ctrlLog;
-	private TelaLog telaLog;
+	// private TelaLog telaLog;
 	private TelaLogPrinc telaLogPrinc;
 	private TelaListaLog telaListLog;
+	private TelaChamaLogByMot telaChama;
+	private TelaListaLogByMot telaListaLogMot;
 
 	// Constructor
 
 	public ControladorLog() {
 		super();
 		// this.listaLogs = new ArrayList<>();
-		this.telaLog = new TelaLog(this);
+		// this.telaLog = new TelaLog(this);
 		this.telaLogPrinc = new TelaLogPrinc(this);
 		this.telaListLog = new TelaListaLog(this);
+		this.telaChama = new TelaChamaLogByMot(this);
+		this.telaListaLogMot = new TelaListaLogByMot(this);
 	}
 
 	// Override method
@@ -147,6 +153,19 @@ public class ControladorLog extends Controlador {
 
 	public void updateTelaListaLogData() {
 		telaListLog.updateData();
+	}
+
+	public void telaChamaListaLogMot() {
+		telaChama.setVisible(true);
+	}
+	
+	public void telaListaLogMot(String motivoLog) {
+		telaListaLogMot.init();
+		telaListaLogMot.updateData(motivoLog);
+	}
+	
+	public void updateTelaListaLogMotData(String motivoLog) {
+		telaListaLogMot.updateData(motivoLog);
 	}
 
 	// Getters & Setters

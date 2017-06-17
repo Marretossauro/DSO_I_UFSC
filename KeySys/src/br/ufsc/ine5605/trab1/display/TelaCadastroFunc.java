@@ -145,7 +145,7 @@ public class TelaCadastroFunc extends JFrame {
 							tfTelefone.getText(), cbCargo.getSelectedIndex() + 1);
 					JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!");
 				} catch (IllegalArgumentException e1) {
-					JOptionPane.showMessageDialog(null, "Preencha todos os campos!");
+					JOptionPane.showMessageDialog(null, e1.getMessage());
 					setVisible(false);
 					dispose();
 				}

@@ -43,6 +43,8 @@ public class TelaListaEmp extends JFrame {
 
 		// Table
 
+		updateData();
+		
 		container.setLayout(null);
 
 		JScrollPane scrollPane = new JScrollPane();
