@@ -18,9 +18,9 @@ public class TelaListaVeicFunc extends JFrame {
 
 	private static final long serialVersionUID = 8449556443344085899L;
 	private ControladorFuncionario ctrlFunc;
-	
+
 	// Components
-	
+
 	private String[] colunas = { "Placa", "Modelo", "Marca", "Ano", "Quilometragem", "Disponibilidade" };
 	private JTable tabelaVeicFunc;
 	private DefaultTableModel tabelaVF;
@@ -35,14 +35,14 @@ public class TelaListaVeicFunc extends JFrame {
 		this.ctrlFunc = owner;
 		this.tabelaVF = new DefaultTableModel(colunas, 0);
 	}
-	
+
 	public void init() {
-		
+
 		Container container = getContentPane();
 		container.setLayout(new GridBagLayout());
 
 		// Table
-		
+
 		container.setLayout(null);
 
 		JScrollPane scrollPane = new JScrollPane();
@@ -58,13 +58,13 @@ public class TelaListaVeicFunc extends JFrame {
 		setSize(665, 420);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
-		
+
 	}
-	
+
 	public void updateData(String numMat) {
-		if(ctrlFunc.verificaFuncionarioExiste(numMat)) {
-			tabelaVF.setNumRows(0);
-			for(Veiculo v : ctrlFunc.buscarPelaMatricula(numMat).getListaDeCarrosLiberados()) {
+		tabelaVF.setNumRows(0);
+		if (ctrlFunc.verificaFuncionarioExiste(numMat)) {
+			for (Veiculo v : ctrlFunc.buscarPelaMatricula(numMat).getListaDeCarrosLiberados()) {
 				String placa = v.getPlaca();
 				String modelo = v.getModelo();
 				String marca = v.getMarca();
@@ -79,7 +79,7 @@ public class TelaListaVeicFunc extends JFrame {
 			setVisible(false);
 			dispose();
 		}
-		
+
 	}
 
 }

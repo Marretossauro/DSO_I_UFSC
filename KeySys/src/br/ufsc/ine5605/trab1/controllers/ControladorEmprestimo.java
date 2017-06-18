@@ -11,6 +11,7 @@ import br.ufsc.ine5605.trab1.exceptions.FuncionarioException;
 import br.ufsc.ine5605.trab1.exceptions.ListaVaziaException;
 import br.ufsc.ine5605.trab1.exceptions.VeiculoException;
 import br.ufsc.ine5605.trab1.objects.Emprestimo;
+import br.ufsc.ine5605.trab1.objects.Funcionario;
 import br.ufsc.ine5605.trab1.objects.Veiculo;
 import br.ufsc.ine5605.trab1.persistencia.EmprestimoDAO;
 
@@ -71,8 +72,11 @@ public class ControladorEmprestimo extends Controlador {
 						ControladorPrincipal.getCtrlPrincipal().getCtrlVeiculo().updateTelaListaVeicData();
 						ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario().getFuncDAO().persist();
 						ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario().updateTelaListaFuncData();
-						ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario()
-								.updateTelaListVeicFuncData(numeroMatricula);
+						for (Funcionario f : ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario().getFuncDAO()
+								.getList()) {
+							ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario()
+									.updateTelaListVeicFuncData(f.getNumeroMatricula());
+						}
 						ControladorPrincipal.getCtrlPrincipal().getCtrlLog()
 								.criaLog("Acesso Permitido: Veiculo permitido e disponivel", numeroMatricula, placa);
 						ControladorPrincipal.getCtrlPrincipal().getCtrlLog().getLogDAO().persist();
@@ -122,6 +126,8 @@ public class ControladorEmprestimo extends Controlador {
 			ControladorPrincipal.getCtrlPrincipal().getCtrlLog().getLogDAO().persist();
 			ControladorPrincipal.getCtrlPrincipal().getCtrlLog().updateTelaListaLogData();
 			buscarPeloCodigo(codigoDoEmprestimo).getUtilitario().setDisponibilidade(true);
+			ControladorPrincipal.getCtrlPrincipal().getCtrlVeiculo().getVeicDAO().persist();
+			ControladorPrincipal.getCtrlPrincipal().getCtrlVeiculo().updateTelaListaVeicData();
 			EmprestimoDAO.getEmpDAO().remove(codigoDoEmprestimo);
 			telaListaEmp.updateData();
 		} else {
