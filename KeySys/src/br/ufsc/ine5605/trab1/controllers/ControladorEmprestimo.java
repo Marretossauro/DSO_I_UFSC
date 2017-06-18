@@ -74,8 +74,11 @@ public class ControladorEmprestimo extends Controlador {
 						ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario().updateTelaListaFuncData();
 						for (Funcionario f : ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario().getFuncDAO()
 								.getList()) {
-							ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario()
-									.updateTelaListVeicFuncData(f.getNumeroMatricula());
+							if (f.getListaDeCarrosLiberados()
+									.contains(buscarPeloCodigo(codigoDoEmprestimo).getUtilitario())) {
+								ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario()
+										.updateTelaListVeicFuncData(f.getNumeroMatricula());
+							}
 						}
 						ControladorPrincipal.getCtrlPrincipal().getCtrlLog()
 								.criaLog("Acesso Permitido: Veiculo permitido e disponivel", numeroMatricula, placa);
@@ -128,6 +131,13 @@ public class ControladorEmprestimo extends Controlador {
 			buscarPeloCodigo(codigoDoEmprestimo).getUtilitario().setDisponibilidade(true);
 			ControladorPrincipal.getCtrlPrincipal().getCtrlVeiculo().getVeicDAO().persist();
 			ControladorPrincipal.getCtrlPrincipal().getCtrlVeiculo().updateTelaListaVeicData();
+			ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario().getFuncDAO().persist();
+			for (Funcionario f : ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario().getFuncDAO().getList()) {
+				if (f.getListaDeCarrosLiberados().contains(buscarPeloCodigo(codigoDoEmprestimo).getUtilitario())) {
+					ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario()
+							.updateTelaListVeicFuncData(f.getNumeroMatricula());
+				}
+			}
 			EmprestimoDAO.getEmpDAO().remove(codigoDoEmprestimo);
 			telaListaEmp.updateData();
 		} else {
