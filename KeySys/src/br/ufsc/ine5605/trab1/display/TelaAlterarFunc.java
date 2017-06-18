@@ -2,7 +2,6 @@ package br.ufsc.ine5605.trab1.display;
 
 import java.awt.Container;
 
-
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -145,6 +144,7 @@ public class TelaAlterarFunc extends JFrame {
 				try {
 					ctrlFuncionario.alterar(tfMat.getText(), tfNome.getText(), tfDataDeNascimento.getText(),
 							tfTelefone.getText(), cbCargo.getSelectedIndex() + 1);
+					ctrlFuncionario.adicionaSeDiretor(tfMat.getText());
 					JOptionPane.showMessageDialog(null, "Alterado com sucesso!");
 				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage());
