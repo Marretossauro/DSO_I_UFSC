@@ -1,6 +1,7 @@
 package br.ufsc.ine5605.trab1.controllers;
 
 import java.util.ArrayList;
+
 import br.ufsc.ine5605.trab1.display.TelaAlterarVeic;
 import br.ufsc.ine5605.trab1.display.TelaCadastroVeic;
 import br.ufsc.ine5605.trab1.display.TelaExcluirVeic;
@@ -15,15 +16,12 @@ import br.ufsc.ine5605.trab1.persistencia.VeiculoDAO;
 
 public class ControladorVeiculo extends Controlador implements IRucd {
 
-	// private ArrayList<Veiculo> listaVeiculos;
-
 	private TelaVeicPrinc telaVeicPrinc;
 	private TelaCadastroVeic telaCadVeic;
 	private TelaAlterarVeic telaAlteraVeic;
 	private TelaListaVeic telaListaVeic;
 	private TelaExcluirVeic telaExcluiVeic;
 	private static ControladorVeiculo ctrlVeiculo;
-	
 
 	// Constructor
 
@@ -73,21 +71,6 @@ public class ControladorVeiculo extends Controlador implements IRucd {
 		}
 	}
 
-	@Override
-	public String lista() throws ListaVaziaException {
-		String listaDeVec = "";
-		if (!VeiculoDAO.getVeicDAO().getList().isEmpty()) {
-			for (Veiculo veiculo : VeiculoDAO.getVeicDAO().getList()) {
-				listaDeVec += ("\nPlaca: " + veiculo.getPlaca() + "\nModelo: " + veiculo.getModelo() + "\nMarca: "
-						+ veiculo.getMarca() + "\nAno de Fabricacao: " + veiculo.getAno() + "\nQuilometragem Atual: "
-						+ veiculo.getQuilometragemAtual() + "\nDisponibilidade: " + veiculo.isDisponivel() + "\n");
-			}
-		} else {
-			throw new ListaVaziaException("\nNao ha veiculos cadastrados");
-		}
-		return listaDeVec;
-	}
-
 	// Update method
 
 	public void alterar(String placa, String placaAtt, String modelo, String marca, int ano, int quilometragemAtual)
@@ -102,6 +85,13 @@ public class ControladorVeiculo extends Controlador implements IRucd {
 				veic.setQuilometragemAtual(quilometragemAtual);
 				VeiculoDAO.getVeicDAO().persist();
 				telaListaVeic.updateData();
+				for (int i = 0; i < ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario().getFuncDAO().getList()
+						.size(); i++) {
+					ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario().getFuncDAO().persist();
+					ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario()
+							.updateTelaListVeicFuncData(ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario()
+									.listarFuncionarios().get(i).getNumeroMatricula());
+				}
 			} else {
 				throw new ListaVaziaException("\nNao ha veiculos cadastrados");
 			}
@@ -124,28 +114,12 @@ public class ControladorVeiculo extends Controlador implements IRucd {
 		return new ArrayList<Veiculo>(VeiculoDAO.getVeicDAO().getList());
 	}
 
-	public String exibeUmVeiculo(String placa) throws VeiculoException {
-		String listaDeVeic = "";
-		if (verificaVeiculoExiste(placa)) {
-			for (Veiculo veic : VeiculoDAO.getVeicDAO().getList()) {
-				if (veic.getPlaca().equalsIgnoreCase(placa)) {
-					listaDeVeic += ("\nPlaca: " + veic.getPlaca() + "\nModelo: " + veic.getModelo() + "\nMarca: "
-							+ veic.getMarca() + "\nAno: " + veic.getAno() + "\nQuilometragem Atual: "
-							+ veic.getQuilometragemAtual());
-				}
-			}
-		} else {
-			throw new VeiculoException("\nVeiculo inexistente");
-		}
-		return listaDeVeic;
-	}
-
 	// Verifications
 
 	public boolean validadePlaca(String placa) {
 		boolean validade = false;
 
-		if (placa.matches("[a-zA-Z]{3,3}-\\d{4,4}") && !placa.substring(4, placa.length()).equals("0000")) {
+		if (placa.matches("[a-zA-Z]{3,3}-\\d{4,4}") && !placa.substring(4, placa.length()).equalsIgnoreCase("0000")) {
 			validade = true;
 		}
 
@@ -155,7 +129,7 @@ public class ControladorVeiculo extends Controlador implements IRucd {
 	public boolean verificaVeiculoExiste(String placa) {
 		if (!VeiculoDAO.getVeicDAO().getList().isEmpty()) {
 			for (Veiculo v : VeiculoDAO.getVeicDAO().getList()) {
-				if (v.getPlaca().equals(placa)) {
+				if (v.getPlaca().equalsIgnoreCase(placa)) {
 					return true;
 				}
 			}
@@ -212,7 +186,7 @@ public class ControladorVeiculo extends Controlador implements IRucd {
 	public Veiculo buscarPelaPlaca(String placa) {
 		if (verificaVeiculoExiste(placa)) {
 			for (Veiculo v : VeiculoDAO.getVeicDAO().getList()) {
-				if (v.getPlaca().equals(placa)) {
+				if (v.getPlaca().equalsIgnoreCase(placa)) {
 					return v;
 				}
 			}
@@ -237,7 +211,7 @@ public class ControladorVeiculo extends Controlador implements IRucd {
 	public void updateTelaListaVeicData() {
 		telaListaVeic.updateData();
 	}
-	
+
 	public void telaExcluiVeic() {
 		telaExcluiVeic.setVisible(true);
 	}

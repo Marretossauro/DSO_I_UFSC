@@ -85,22 +85,6 @@ public class ControladorFuncionario extends Controlador implements IRucd {
 		}
 	}
 
-	@Override
-	public String lista() throws ListaVaziaException {
-		String listaDeFunc = "";
-		if (!FuncionarioDAO.getFuncDAO().getList().isEmpty()) {
-			for (Funcionario funcionario : FuncionarioDAO.getFuncDAO().getList()) {
-				listaDeFunc += ("\nNumero de Matricula: " + funcionario.getNumeroMatricula() + "\nNome: "
-						+ funcionario.getNome() + "\nNumero de telefone: " + funcionario.getTelefone()
-						+ "\nData de Nascimento: " + funcionario.getDataNascimento() + "\nCargo: "
-						+ funcionario.getCargo() + "\n");
-			}
-		} else {
-			throw new ListaVaziaException("\nNao ha funcionarios cadastrados");
-		}
-		return listaDeFunc;
-	}
-
 	// Update method
 
 	public void alterar(String numeroMatricula, String nome, String dataDeNascimento, String telefone, int opcaoc)
@@ -133,38 +117,6 @@ public class ControladorFuncionario extends Controlador implements IRucd {
 	}
 
 	// List and Exhibit methods
-
-	public String exibeUmFuncionario(String numeroMatricula) throws Exception {
-		String listaDeFunc = "";
-		if (verificaFuncionarioExiste(numeroMatricula)) {
-			for (Funcionario func : FuncionarioDAO.getFuncDAO().getList()) {
-				if (func.getNumeroMatricula().equalsIgnoreCase(numeroMatricula)) {
-					listaDeFunc += ("\nNumero de Matricula: " + func.getNumeroMatricula() + "\nNome: " + func.getNome()
-							+ "\nNumero de telefone: " + func.getTelefone() + "\nData de Nascimento: "
-							+ func.getDataNascimento() + "\nCargo: " + func.getCargo() + "\n"
-							+ exibeListaDeCarrosLiberados(func.getListaDeCarrosLiberados()));
-				}
-			}
-		} else {
-			throw new FuncionarioException("\nFuncionario inexistente");
-		}
-		return listaDeFunc;
-	}
-
-	public String exibeListaDeCarrosLiberados(ArrayList<Veiculo> listaDeCarrosLiberados) throws ListaVaziaException {
-		String listaDeVecLiberados = ("\nVeiculos liberados: \n");
-		if (!listaDeCarrosLiberados.isEmpty()) {
-			for (Veiculo veiculo : listaDeCarrosLiberados) {
-				listaDeVecLiberados += ("\nPlaca: " + veiculo.getPlaca() + "\nModelo: " + veiculo.getModelo()
-						+ "\nMarca: " + veiculo.getMarca() + "\nAno de Fabricacao: " + veiculo.getAno()
-						+ "\nQuilometragem Atual: " + veiculo.getQuilometragemAtual() + "\nDisponibilidade: "
-						+ veiculo.isDisponivel() + "\n");
-			}
-		} else {
-			throw new ListaVaziaException("\nO funcionario nao tem veiculos liberados por permissao");
-		}
-		return listaDeVecLiberados;
-	}
 
 	public ArrayList<Veiculo> listarCarrosLiberados(String matricula) {
 		return buscarPelaMatricula(matricula).getListaDeCarrosLiberados();
@@ -216,7 +168,7 @@ public class ControladorFuncionario extends Controlador implements IRucd {
 	public boolean validadeMatricula(String numeroMatricula) {
 		boolean validade = false;
 
-		if (numeroMatricula.matches("\\d{4}") && !numeroMatricula.equals("0000")) {
+		if (numeroMatricula.matches("\\d{4}") && !numeroMatricula.equalsIgnoreCase("0000")) {
 			validade = true;
 		}
 
@@ -226,7 +178,7 @@ public class ControladorFuncionario extends Controlador implements IRucd {
 	public boolean verificaFuncionarioExiste(String numeroMatricula) {
 		if (!FuncionarioDAO.getFuncDAO().getList().isEmpty()) {
 			for (Funcionario f : FuncionarioDAO.getFuncDAO().getList()) {
-				if (f.getNumeroMatricula().equals(numeroMatricula)) {
+				if (f.getNumeroMatricula().equalsIgnoreCase(numeroMatricula)) {
 					return true;
 				}
 			}
@@ -251,9 +203,9 @@ public class ControladorFuncionario extends Controlador implements IRucd {
 	public boolean verificaData(String dataDeNascimento) {
 		boolean validade = false;
 
-		if (dataDeNascimento.matches("\\d{2}/\\d{2}/\\d{4}") && !dataDeNascimento.substring(0, 1).equals("00")
-				&& !dataDeNascimento.substring(3, 4).equals("00")
-				&& !dataDeNascimento.substring(6, dataDeNascimento.length()).equals("0000")) {
+		if (dataDeNascimento.matches("\\d{2}/\\d{2}/\\d{4}") && !dataDeNascimento.substring(0, 1).equalsIgnoreCase("00")
+				&& !dataDeNascimento.substring(3, 4).equalsIgnoreCase("00")
+				&& !dataDeNascimento.substring(6, dataDeNascimento.length()).equalsIgnoreCase("0000")) {
 			validade = true;
 		}
 		return validade;
@@ -304,7 +256,7 @@ public class ControladorFuncionario extends Controlador implements IRucd {
 	public Funcionario buscarPelaMatricula(String numeroMatricula) {
 		if (verificaFuncionarioExiste(numeroMatricula)) {
 			for (Funcionario f : FuncionarioDAO.getFuncDAO().getList()) {
-				if (f.getNumeroMatricula().equals(numeroMatricula)) {
+				if (f.getNumeroMatricula().equalsIgnoreCase(numeroMatricula)) {
 					return f;
 				}
 			}
@@ -346,7 +298,7 @@ public class ControladorFuncionario extends Controlador implements IRucd {
 		if (validadeMatricula(numeroMatricula)) {
 			if (!ControladorPrincipal.getCtrlPrincipal().getCtrlEmprestimo().getEmpDAO().getList().isEmpty()) {
 				for (Emprestimo e : ControladorPrincipal.getCtrlPrincipal().getCtrlEmprestimo().getEmpDAO().getList()) {
-					if (e.getUsuario().getNumeroMatricula().equals(numeroMatricula)) {
+					if (e.getUsuario().getNumeroMatricula().equalsIgnoreCase(numeroMatricula)) {
 						return e.getUtilitario().getPlaca();
 					}
 				}
@@ -410,7 +362,7 @@ public class ControladorFuncionario extends Controlador implements IRucd {
 			if (!FuncionarioDAO.getFuncDAO().getList().isEmpty()) {
 				for (Funcionario f : FuncionarioDAO.getFuncDAO().getList()) {
 					for (Veiculo v : f.getListaDeCarrosLiberados()) {
-						if (v.getPlaca().equals(placa)) {
+						if (v.getPlaca().equalsIgnoreCase(placa)) {
 							f.getListaDeCarrosLiberados().remove(
 									ControladorPrincipal.getCtrlPrincipal().getCtrlVeiculo().buscarPelaPlaca(placa));
 							FuncionarioDAO.getFuncDAO().persist();

@@ -166,7 +166,7 @@ public class TelaAlterarVeic extends JFrame {
 							Integer.parseInt(tfAno.getText()), Integer.parseInt(tfQuilometragem.getText()));
 					JOptionPane.showMessageDialog(null, "Alterado com sucesso!");
 				} catch (Exception e1) {
-					JOptionPane.showMessageDialog(null, "Preencha todos os campos!");
+					JOptionPane.showMessageDialog(null, e1.getMessage());
 					setVisible(false);
 					dispose();
 				}

@@ -18,7 +18,6 @@ public class ControladorPrincipal extends Controlador {
 
 	@Override
 	public void inicia() {
-		// telaPrincipal.exibeMenuInicial();
 		telaPrincGer.setVisible(true);
 	}
 

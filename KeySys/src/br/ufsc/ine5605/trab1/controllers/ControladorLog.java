@@ -19,9 +19,7 @@ import br.ufsc.ine5605.trab1.persistencia.LogDAO;
 
 public class ControladorLog extends Controlador {
 
-	// private ArrayList<Log> listaLogs;
 	private static ControladorLog ctrlLog;
-	// private TelaLog telaLog;
 	private TelaLogPrinc telaLogPrinc;
 	private TelaListaLog telaListLog;
 	private TelaChamaLogByMot telaChama;
@@ -35,8 +33,6 @@ public class ControladorLog extends Controlador {
 
 	public ControladorLog() {
 		super();
-		// this.listaLogs = new ArrayList<>();
-		// this.telaLog = new TelaLog(this);
 		this.telaLogPrinc = new TelaLogPrinc(this);
 		this.telaListLog = new TelaListaLog(this);
 		this.telaChama = new TelaChamaLogByMot(this);
@@ -51,7 +47,6 @@ public class ControladorLog extends Controlador {
 
 	@Override
 	public void inicia() {
-		// telaLog.exibeMenuInicial();
 		telaLogPrinc.setVisible(true);
 	}
 
@@ -129,36 +124,6 @@ public class ControladorLog extends Controlador {
 			throw new IllegalArgumentException("Veiculo inexistente");
 		}
 		return listaLogsByPlaca;
-	}
-
-	// Exhibit methods
-
-	public String exibeListaLogs(ArrayList<Log> listaLogs) throws ListaVaziaException {
-		String listaDeLog = "";
-		if (!listaLogs.isEmpty()) {
-			for (Log l : listaLogs) {
-				listaDeLog += ("\nMotivo: " + l.getMotivo() + "\nNumero de Matricula: " + l.getNumeroMatricula()
-						+ "\nPlaca do Veiculo: " + l.getPlaca() + "\nData e Hora do Registro: " + l.getDataDoLog()
-						+ "\n");
-			}
-		} else {
-			throw new ListaVaziaException("\nNenhum registro foi gerado");
-		}
-		return listaDeLog;
-	}
-
-	public String exibeListaLogsGeral() throws ListaVaziaException {
-		String listaDeLog = "";
-		if (!LogDAO.getlogDAO().getList().isEmpty()) {
-			for (Log l : LogDAO.getlogDAO().getList()) {
-				listaDeLog += ("\nMotivo: " + l.getMotivo() + "\nNumero de Matricula: " + l.getNumeroMatricula()
-						+ "\nPlaca do Veiculo: " + l.getPlaca() + "\nData e Hora do Registro: " + l.getDataDoLog()
-						+ "\n");
-			}
-		} else {
-			throw new ListaVaziaException("\nNenhum registro foi gerado");
-		}
-		return listaDeLog;
 	}
 
 	// Window method
