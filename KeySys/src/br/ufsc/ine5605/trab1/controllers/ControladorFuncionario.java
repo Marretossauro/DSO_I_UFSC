@@ -2,13 +2,13 @@ package br.ufsc.ine5605.trab1.controllers;
 
 import java.util.ArrayList;
 
+
 import br.ufsc.ine5605.trab1.display.TelaAddVeicFunc;
 import br.ufsc.ine5605.trab1.display.TelaAlterarFunc;
 import br.ufsc.ine5605.trab1.display.TelaCadastroFunc;
 import br.ufsc.ine5605.trab1.display.TelaChamaListar;
 import br.ufsc.ine5605.trab1.display.TelaExcluirFunc;
 import br.ufsc.ine5605.trab1.display.TelaFuncPrinc;
-//import br.ufsc.ine5605.trab1.display.TelaFuncionario;
 import br.ufsc.ine5605.trab1.display.TelaListaFunc;
 import br.ufsc.ine5605.trab1.display.TelaListaVeicFunc;
 import br.ufsc.ine5605.trab1.exceptions.FuncionarioException;
@@ -23,7 +23,6 @@ import br.ufsc.ine5605.trab1.persistencia.FuncionarioDAO;
 
 public class ControladorFuncionario extends Controlador implements IRucd {
 
-	// private ArrayList<Funcionario> listaFuncionarios;
 
 	private TelaFuncPrinc telaFuncPrinc;
 	private TelaCadastroFunc telaCadFunc;
