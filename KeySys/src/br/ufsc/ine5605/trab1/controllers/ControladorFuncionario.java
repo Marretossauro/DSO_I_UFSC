@@ -1,6 +1,8 @@
 package br.ufsc.ine5605.trab1.controllers;
 
 import java.util.ArrayList;
+
+import br.ufsc.ine5605.trab1.display.TelaAddVeicFunc;
 import br.ufsc.ine5605.trab1.display.TelaAlterarFunc;
 import br.ufsc.ine5605.trab1.display.TelaCadastroFunc;
 import br.ufsc.ine5605.trab1.display.TelaChamaListar;
@@ -30,6 +32,7 @@ public class ControladorFuncionario extends Controlador implements IRucd {
 	private TelaExcluirFunc telaExcluiFunc;
 	private TelaChamaListar telaChamaList;
 	private TelaListaVeicFunc telaListVeicFunc;
+	private TelaAddVeicFunc telaAddVeicFunc;
 	private static ControladorFuncionario ctrlFuncionario;
 
 	// Constructor
@@ -43,6 +46,7 @@ public class ControladorFuncionario extends Controlador implements IRucd {
 		telaExcluiFunc = new TelaExcluirFunc(this);
 		telaChamaList = new TelaChamaListar(this);
 		telaListVeicFunc = new TelaListaVeicFunc(this);
+		telaAddVeicFunc = new TelaAddVeicFunc(this);
 	}
 
 	// Override methods
@@ -457,6 +461,10 @@ public class ControladorFuncionario extends Controlador implements IRucd {
 		telaListVeicFunc.setVisible(true);
 	}
 
+	public void telaAddVeicFunc() {
+		telaAddVeicFunc.setVisible(true);
+	}
+	
 	public void updateTelaListVeicFuncData(String numeroMatricula) {
 		telaListVeicFunc.updateData(numeroMatricula);
 	}

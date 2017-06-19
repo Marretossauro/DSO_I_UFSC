@@ -1,6 +1,7 @@
 package br.ufsc.ine5605.trab1.display;
 
 import java.awt.Container;
+
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -12,12 +13,13 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
-import br.ufsc.ine5605.trab1.controllers.ControladorPrincipal;
+
+import br.ufsc.ine5605.trab1.controllers.ControladorFuncionario;
 
 public class TelaAddVeicFunc extends JFrame {
 
 	private static final long serialVersionUID = -1236542485250718979L;
-	private ControladorPrincipal ctrlPrinc;
+	private ControladorFuncionario ctrlFunc;
 	private GerenciadorBotoesAddV buttManager;
 
 	// Components
@@ -29,14 +31,14 @@ public class TelaAddVeicFunc extends JFrame {
 	private JButton btAdd;
 	private JButton btDel;
 
-	public TelaAddVeicFunc(ControladorPrincipal owner) {
+	public TelaAddVeicFunc(ControladorFuncionario owner) {
 		super("Alterar veiculos permitidos");
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());
 		}
-		this.ctrlPrinc = owner;
+		this.ctrlFunc = owner;
 		this.buttManager = new GerenciadorBotoesAddV();
 		init();
 	}
@@ -108,7 +110,7 @@ public class TelaAddVeicFunc extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			if (e.getActionCommand().equals("Incluir")) {
 				try {
-					ctrlPrinc.getCtrlFuncionario().addPermVeic(tfMat.getText(), tfPlac.getText());
+					ctrlFunc.addPermVeic(tfMat.getText(), tfPlac.getText());
 					JOptionPane.showMessageDialog(null, "Adicionado com sucesso!");
 				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -117,7 +119,7 @@ public class TelaAddVeicFunc extends JFrame {
 				}
 			} else if (e.getActionCommand().equals("Deletar")) {
 				try {
-					ctrlPrinc.getCtrlFuncionario().delPermVeic(tfMat.getText(), tfPlac.getText());
+					ctrlFunc.delPermVeic(tfMat.getText(), tfPlac.getText());
 					JOptionPane.showMessageDialog(null, "Excluido com sucesso!");
 				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage());

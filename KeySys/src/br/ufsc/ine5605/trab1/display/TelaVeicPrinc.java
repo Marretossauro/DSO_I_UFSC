@@ -107,7 +107,7 @@ public class TelaVeicPrinc extends JFrame {
 			} else if (e.getActionCommand().equals("AlteraVeiculo")) {
 				ctrlVeic.telaAlteraVeic();
 			} else if (e.getActionCommand().equals("ExcluiVeiculo")) {
-				ControladorPrincipal.getCtrlPrincipal().telaExcluiVeic();
+				ctrlVeic.telaExcluiVeic();
 			} else if (e.getActionCommand().equals("ListaVeiculos")) {
 				ctrlVeic.telaListaVeic();
 			}

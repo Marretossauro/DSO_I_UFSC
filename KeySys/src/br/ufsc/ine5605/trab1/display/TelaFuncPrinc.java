@@ -138,7 +138,7 @@ public class TelaFuncPrinc extends JFrame {
 			} else if (e.getActionCommand().equals("ListaVeicFuncionarios")) {
 				ctrlFuncionario.telaChamaList();
 			} else if (e.getActionCommand().equals("AddVeicPermFunc")) {
-				ControladorPrincipal.getCtrlPrincipal().telaAddVeicFunc();
+				ctrlFuncionario.telaAddVeicFunc();
 			}
 		}
 
