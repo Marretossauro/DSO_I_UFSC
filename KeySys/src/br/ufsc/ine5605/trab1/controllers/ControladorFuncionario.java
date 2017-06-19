@@ -344,12 +344,18 @@ public class ControladorFuncionario extends Controlador implements IRucd {
 								.size(); j++) {
 							if (listarCarrosLiberados(listarFuncionarios().get(i).getNumeroMatricula()).get(j)
 									.getPlaca().equals(placa)) {
-								FuncionarioDAO.getFuncDAO().get(numeroMatricula).getListaDeCarrosLiberados().remove(j);
-								FuncionarioDAO.getFuncDAO().persist();
-								telaListaFunc.updateData();
-								telaListVeicFunc.updateData(numeroMatricula);
+								if(!ControladorPrincipal.getCtrlPrincipal().getCtrlEmprestimo().verificaEmprestimoMatriculaPlaca(numeroMatricula, placa)) {
+									FuncionarioDAO.getFuncDAO().get(numeroMatricula).getListaDeCarrosLiberados().remove(j);
+									FuncionarioDAO.getFuncDAO().persist();
+									telaListaFunc.updateData();
+									telaListVeicFunc.updateData(numeroMatricula);
+									return;
+								} else {
+									throw new Exception("Veiculo emprestado, devolva antes de remover a permissao");
+								}
 							}
 						}
+						throw new Exception("Funcionario nao possui esta permissao");
 					}
 				}
 			} else {
