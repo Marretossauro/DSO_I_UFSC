@@ -181,25 +181,46 @@ public class ControladorEmprestimo extends Controlador {
 		return false;
 	}
 
-	public void verificaEmp(int quilometragemAtual, String numeroMatricula, String placa) throws Exception {
+	public void verificaEmp(int quilometragemAtual, String numeroMatricula, int codigo) throws Exception {
 
 		for (Emprestimo e : EmprestimoDAO.getEmpDAO().getList()) {
 			if (e.getUsuario().getNumeroMatricula().equalsIgnoreCase(numeroMatricula)
-					&& e.getUtilitario().getPlaca().equalsIgnoreCase(placa)
+					&& e.getCodigo() == codigo
 					&& quilometragemAtual >= e.getUtilitario().getQuilometragemAtual()
 					&& !e.getUtilitario().isDisponivel()) {
 				e.getUtilitario().setQuilometragemAtual(quilometragemAtual);
 				ControladorEmprestimo.getCtrlEmprestimo().encerraEmprestimo(e.getCodigo());
-				ControladorLog.getCtrlLog().criaLog("Devolucao efetuada com sucesso: Veiculo Devolvido",
-						numeroMatricula, placa);
+				EmprestimoDAO.getEmpDAO().persist();
+				telaListaEmp.updateData();
 				break;
 			} else {
-				ControladorLog.getCtrlLog().criaLog("Devolucao negada: Quilometragem menor que a anterior",
-						numeroMatricula, placa);
+				ControladorPrincipal.getCtrlPrincipal().getCtrlLog().criaLog("Devolucao negada: Quilometragem menor que a anterior",
+						numeroMatricula, e.getUtilitario().getPlaca());
+				ControladorPrincipal.getCtrlPrincipal().getCtrlLog().getLogDAO().persist();
+				ControladorPrincipal.getCtrlPrincipal().getCtrlLog().updateTelaListaLogData();
 				throw new VeiculoException("Devolucao negada: Quilometragem menor que a anterior");
 			}
 		}
 
+	}
+	
+	public boolean verificaEmprestimoMatriculaPlaca(String matricula, String placa) throws Exception{
+		if (!placa.equals("") && placa != null) {
+			if (ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario().verificaFuncionarioExiste(matricula)) {
+				if(!EmprestimoDAO.getEmpDAO().getList().isEmpty()){
+					for (Emprestimo e : EmprestimoDAO.getEmpDAO().getList()) {
+						if (e.getUsuario().getNumeroMatricula().equals(matricula) && e.getUtilitario().getPlaca().equals(placa)) {
+							return true;
+						}
+					}
+				}
+			} else {
+				throw new Exception("Funcionario Inexistente");
+			}
+		} else {
+			throw new Exception("Placa Invalida");
+		}
+		return false;
 	}
 
 	public boolean verificaPerm(String numeroMatricula, String placa) {

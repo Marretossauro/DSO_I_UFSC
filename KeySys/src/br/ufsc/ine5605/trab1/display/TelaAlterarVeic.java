@@ -25,8 +25,6 @@ public class TelaAlterarVeic extends JFrame {
 
 	private JLabel lbPlaca;
 	private JTextField tfPlaca;
-	private JLabel lbPlacAtt;
-	private JTextField tfPlacAtt;
 	private JLabel lbModelo;
 	private JTextField tfModelo;
 	private JLabel lbMarca;
@@ -67,20 +65,6 @@ public class TelaAlterarVeic extends JFrame {
 		constraints.gridy = 0;
 		tfPlaca.setPreferredSize(new Dimension(100, 20));
 		container.add(tfPlaca, constraints);
-
-		// New car plate set
-		
-		lbPlacAtt = new JLabel();
-		lbPlacAtt.setText("Nova Placa: ");
-		constraints.gridx = 0;
-		constraints.gridy = 1;
-		container.add(lbPlacAtt, constraints);
-		tfPlacAtt = new JTextField();
-		tfPlacAtt.setText("");
-		constraints.gridx = 1;
-		constraints.gridy = 1;
-		tfPlacAtt.setPreferredSize(new Dimension(100, 20));
-		container.add(tfPlacAtt, constraints);
 		
 		// Model set
 
@@ -162,7 +146,7 @@ public class TelaAlterarVeic extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			if (e.getActionCommand().equals("Alterar")) {
 				try {
-					ctrlVeiculo.alterar(tfPlaca.getText(), tfPlacAtt.getText(),tfModelo.getText(), tfMarca.getText(),
+					ctrlVeiculo.alterar(tfPlaca.getText(), tfModelo.getText(), tfMarca.getText(),
 							Integer.parseInt(tfAno.getText()), Integer.parseInt(tfQuilometragem.getText()));
 					JOptionPane.showMessageDialog(null, "Alterado com sucesso!");
 				} catch (Exception e1) {

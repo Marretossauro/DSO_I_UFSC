@@ -25,8 +25,10 @@ public class TelaEncEmp extends JFrame {
 	// Components
 
 	private JLabel lbMat;
+	private JLabel lbQuil;
 	private JLabel lbCod;
 	private JTextField tfMat;
+	private JTextField tfQuil;
 	private JTextField tfCod;
 	private JButton btOk;
 
@@ -76,6 +78,20 @@ public class TelaEncEmp extends JFrame {
 		tfCod.setPreferredSize(new Dimension(100, 20));
 		container.add(tfCod, constraints);
 
+		// Km set
+		
+		lbQuil = new JLabel();
+		lbQuil.setText("Quilometragem: ");
+		constraints.gridx = 0;
+		constraints.gridy = 2;
+		container.add(lbQuil, constraints);
+		tfQuil = new JTextField();
+		tfQuil.setText("");
+		constraints.gridx = 1;
+		constraints.gridy = 2;
+		tfQuil.setPreferredSize(new Dimension(100, 20));
+		container.add(tfQuil, constraints);
+		
 		// Ok button set
 
 		btOk = new JButton();
@@ -83,7 +99,7 @@ public class TelaEncEmp extends JFrame {
 		btOk.setActionCommand("Remove");
 		btOk.addActionListener(buttManager);
 		constraints.gridx = 1;
-		constraints.gridy = 2;
+		constraints.gridy = 3;
 		container.add(btOk, constraints);
 
 		// JFrame configuration
@@ -100,7 +116,7 @@ public class TelaEncEmp extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			if (e.getActionCommand().equals("Remove")) {
 				try {
-					ctrlEmp.encerraEmprestimo(Integer.parseInt(tfCod.getText()));
+					ctrlEmp.verificaEmp(Integer.parseInt(tfQuil.getText()), tfMat.getText(), Integer.parseInt(tfCod.getText()));
 					JOptionPane.showMessageDialog(null, "Emprestimo encerrado com sucesso!");
 				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage());

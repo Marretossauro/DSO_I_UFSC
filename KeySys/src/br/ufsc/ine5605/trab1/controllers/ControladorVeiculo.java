@@ -11,6 +11,7 @@ import br.ufsc.ine5605.trab1.display.TelaVeicPrinc;
 import br.ufsc.ine5605.trab1.exceptions.ListaVaziaException;
 import br.ufsc.ine5605.trab1.exceptions.VeiculoException;
 import br.ufsc.ine5605.trab1.interfaces.IRucd;
+import br.ufsc.ine5605.trab1.objects.Funcionario;
 import br.ufsc.ine5605.trab1.objects.Veiculo;
 import br.ufsc.ine5605.trab1.persistencia.VeiculoDAO;
 
@@ -43,8 +44,9 @@ public class ControladorVeiculo extends Controlador implements IRucd {
 
 	@Override
 	public void cadastrar(Object veiculo) throws IllegalArgumentException {
-		if (veiculo != null) {
-			Veiculo veic = (Veiculo) veiculo;
+		Veiculo veic = (Veiculo) veiculo;
+		if (veic.getAno() != 0 && !veic.getMarca().equals("") && !veic.getModelo().equals("")
+				&& !veic.getPlaca().equals("") && veic != null) {
 			if (!VeiculoDAO.getVeicDAO().getList().isEmpty()) {
 				if (!verificaVeiculoExiste(veic.getPlaca())) {
 					VeiculoDAO.getVeicDAO().put(veic);
@@ -62,10 +64,17 @@ public class ControladorVeiculo extends Controlador implements IRucd {
 	}
 
 	@Override
-	public void excluir(String placa) throws VeiculoException {
+	public void excluir(String placa) throws Exception {
 		if (verificaVeiculoExiste(placa)) {
-			VeiculoDAO.getVeicDAO().remove(placa);
-			telaListaVeic.updateData();
+			for (Funcionario f : ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario().getFuncDAO().getList()) {
+				if (!ControladorPrincipal.getCtrlPrincipal().getCtrlEmprestimo()
+						.verificaEmprestimoMatriculaPlaca(f.getNumeroMatricula(), placa)) {
+					VeiculoDAO.getVeicDAO().remove(placa);
+					telaListaVeic.updateData();
+				} else {
+					throw new Exception("Este veiculo esta emprestado, devolva antes de excluir");
+				}
+			}
 		} else {
 			throw new VeiculoException("\nVeiculo inexistente");
 		}
@@ -73,19 +82,16 @@ public class ControladorVeiculo extends Controlador implements IRucd {
 
 	// Update method
 
-	public void alterar(String placa, String placaAtt, String modelo, String marca, int ano, int quilometragemAtual)
-			throws Exception {
-		Veiculo veic = buscarPelaPlaca(placa);
-		if (veic != null) {
+	public void alterar(String placa, String modelo, String marca, int ano, int quilometragemAtual) throws Exception {
+		if (VeiculoDAO.getVeicDAO().get(placa) != null) {
 			if (!VeiculoDAO.getVeicDAO().getList().isEmpty()) {
-				veic.setPlaca(placaAtt);
-				veic.setModelo(modelo);
-				veic.setMarca(marca);
-				veic.setAno(ano);
-				veic.setQuilometragemAtual(quilometragemAtual);
+				VeiculoDAO.getVeicDAO().get(placa).setModelo(modelo);
+				VeiculoDAO.getVeicDAO().get(placa).setMarca(marca);
+				VeiculoDAO.getVeicDAO().get(placa).setAno(ano);
+				VeiculoDAO.getVeicDAO().get(placa).setQuilometragemAtual(quilometragemAtual);
 				VeiculoDAO.getVeicDAO().persist();
 				telaListaVeic.updateData();
-				for (int i = 0; i < ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario().getFuncDAO().getList()
+				for (int i = 0; i < ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario().listarFuncionarios()
 						.size(); i++) {
 					ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario().getFuncDAO().persist();
 					ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario()
@@ -128,8 +134,8 @@ public class ControladorVeiculo extends Controlador implements IRucd {
 
 	public boolean verificaVeiculoExiste(String placa) {
 		if (!VeiculoDAO.getVeicDAO().getList().isEmpty()) {
-			for (Veiculo v : VeiculoDAO.getVeicDAO().getList()) {
-				if (v.getPlaca().equalsIgnoreCase(placa)) {
+			for (int i = 0; i < listarVeiculos().size(); i++) {
+				if (listarVeiculos().get(i).getPlaca().equalsIgnoreCase(placa)) {
 					return true;
 				}
 			}

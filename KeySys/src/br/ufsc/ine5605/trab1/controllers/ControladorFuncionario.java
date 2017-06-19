@@ -2,7 +2,6 @@ package br.ufsc.ine5605.trab1.controllers;
 
 import java.util.ArrayList;
 
-
 import br.ufsc.ine5605.trab1.display.TelaAddVeicFunc;
 import br.ufsc.ine5605.trab1.display.TelaAlterarFunc;
 import br.ufsc.ine5605.trab1.display.TelaCadastroFunc;
@@ -22,7 +21,6 @@ import br.ufsc.ine5605.trab1.objects.Veiculo;
 import br.ufsc.ine5605.trab1.persistencia.FuncionarioDAO;
 
 public class ControladorFuncionario extends Controlador implements IRucd {
-
 
 	private TelaFuncPrinc telaFuncPrinc;
 	private TelaCadastroFunc telaCadFunc;
@@ -58,7 +56,8 @@ public class ControladorFuncionario extends Controlador implements IRucd {
 	@Override
 	public void cadastrar(Object funcionario) throws IllegalArgumentException {
 		Funcionario func = (Funcionario) funcionario;
-		if (func != null) {
+		if (!func.getDataNascimento().equals("") && !func.getNome().equals("") && !func.getNumeroMatricula().equals("")
+				&& !func.getTelefone().equals("") && func != null) {
 			if (!FuncionarioDAO.getFuncDAO().getList().isEmpty()) {
 				if (!verificaFuncionarioExiste(func.getNumeroMatricula())) {
 					FuncionarioDAO.getFuncDAO().put(func);
@@ -177,8 +176,8 @@ public class ControladorFuncionario extends Controlador implements IRucd {
 
 	public boolean verificaFuncionarioExiste(String numeroMatricula) {
 		if (!FuncionarioDAO.getFuncDAO().getList().isEmpty()) {
-			for (Funcionario f : FuncionarioDAO.getFuncDAO().getList()) {
-				if (f.getNumeroMatricula().equalsIgnoreCase(numeroMatricula)) {
+			for (int i = 0; i < listarFuncionarios().size(); i++) {
+				if (listarFuncionarios().get(i).getNumeroMatricula().equalsIgnoreCase(numeroMatricula)) {
 					return true;
 				}
 			}
@@ -339,15 +338,19 @@ public class ControladorFuncionario extends Controlador implements IRucd {
 	public void delPermVeic(String numeroMatricula, String placa) throws Exception {
 		if (verificaFuncionarioExiste(numeroMatricula)) {
 			if (ControladorPrincipal.getCtrlPrincipal().getCtrlVeiculo().verificaVeiculoExiste(placa)) {
-				if (buscarPelaMatricula(numeroMatricula).getListaDeCarrosLiberados()
-						.contains(ControladorPrincipal.getCtrlPrincipal().getCtrlVeiculo().buscarPelaPlaca(placa))) {
-					buscarPelaMatricula(numeroMatricula).getListaDeCarrosLiberados()
-							.remove(ControladorPrincipal.getCtrlPrincipal().getCtrlVeiculo().buscarPelaPlaca(placa));
-					FuncionarioDAO.getFuncDAO().persist();
-					telaListaFunc.updateData();
-					telaListVeicFunc.updateData(numeroMatricula);
-				} else {
-					throw new Exception("O funcionario nao possui esta permissao");
+				for (int i = 0; i < listarFuncionarios().size(); i++) {
+					if (listarFuncionarios().get(i).getNumeroMatricula().equals(numeroMatricula)) {
+						for (int j = 0; j < listarCarrosLiberados(listarFuncionarios().get(i).getNumeroMatricula())
+								.size(); j++) {
+							if (listarCarrosLiberados(listarFuncionarios().get(i).getNumeroMatricula()).get(j)
+									.getPlaca().equals(placa)) {
+								FuncionarioDAO.getFuncDAO().get(numeroMatricula).getListaDeCarrosLiberados().remove(j);
+								FuncionarioDAO.getFuncDAO().persist();
+								telaListaFunc.updateData();
+								telaListVeicFunc.updateData(numeroMatricula);
+							}
+						}
+					}
 				}
 			} else {
 				throw new VeiculoException("Veiculo inexistente");
@@ -360,13 +363,20 @@ public class ControladorFuncionario extends Controlador implements IRucd {
 	public void delPermVeicAll(String placa) throws Exception {
 		if (ControladorPrincipal.getCtrlPrincipal().getCtrlVeiculo().validadePlaca(placa)) {
 			if (!FuncionarioDAO.getFuncDAO().getList().isEmpty()) {
-				for (Funcionario f : FuncionarioDAO.getFuncDAO().getList()) {
-					for (Veiculo v : f.getListaDeCarrosLiberados()) {
-						if (v.getPlaca().equalsIgnoreCase(placa)) {
-							f.getListaDeCarrosLiberados().remove(
-									ControladorPrincipal.getCtrlPrincipal().getCtrlVeiculo().buscarPelaPlaca(placa));
-							FuncionarioDAO.getFuncDAO().persist();
-							telaListVeicFunc.updateData(f.getNumeroMatricula());
+				for (int i = 0; i < listarFuncionarios().size(); i++) {
+					for (int j = 0; j < listarFuncionarios().get(i).getListaDeCarrosLiberados().size(); j++) {
+						if (listarFuncionarios().get(i).getListaDeCarrosLiberados().get(j).getPlaca()
+								.equalsIgnoreCase(placa)) {
+							if (!ControladorPrincipal.getCtrlPrincipal().getCtrlEmprestimo()
+									.verificaEmprestimoMatriculaPlaca(listarFuncionarios().get(i).getNumeroMatricula(),
+											placa)) {
+								listarFuncionarios().get(i).getListaDeCarrosLiberados().remove(ControladorPrincipal
+										.getCtrlPrincipal().getCtrlVeiculo().buscarPelaPlaca(placa));
+								FuncionarioDAO.getFuncDAO().persist();
+								telaListVeicFunc.updateData(listarFuncionarios().get(i).getNumeroMatricula());
+							} else {
+								throw new Exception("Veiculo emprestado, encerre antes de excluir a permissao");
+							}
 						}
 					}
 				}
@@ -415,7 +425,7 @@ public class ControladorFuncionario extends Controlador implements IRucd {
 	public void telaAddVeicFunc() {
 		telaAddVeicFunc.setVisible(true);
 	}
-	
+
 	public void updateTelaListVeicFuncData(String numeroMatricula) {
 		telaListVeicFunc.updateData(numeroMatricula);
 	}
