@@ -91,13 +91,7 @@ public class ControladorVeiculo extends Controlador implements IRucd {
 				VeiculoDAO.getVeicDAO().get(placa).setQuilometragemAtual(quilometragemAtual);
 				VeiculoDAO.getVeicDAO().persist();
 				telaListaVeic.updateData();
-				for (int i = 0; i < ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario().listarFuncionarios()
-						.size(); i++) {
-					ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario().getFuncDAO().persist();
-					ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario()
-							.updateTelaListVeicFuncData(ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario()
-									.listarFuncionarios().get(i).getNumeroMatricula());
-				}
+				ControladorPrincipal.getCtrlPrincipal().getCtrlFuncionario().alteraPermVeicAll(placa);
 			} else {
 				throw new ListaVaziaException("\nNao ha veiculos cadastrados");
 			}
