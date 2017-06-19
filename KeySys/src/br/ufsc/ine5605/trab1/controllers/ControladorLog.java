@@ -68,7 +68,7 @@ public class ControladorLog extends Controlador {
 
 		ArrayList<Log> listaLogsByMotivo = new ArrayList<>();
 
-		if (motivo != null) {
+		if (!motivo.equals("") && motivo != null) {
 			if (!LogDAO.getlogDAO().getList().isEmpty()) {
 				for (Log l : LogDAO.getlogDAO().getList()) {
 					if (l.getMotivo().toLowerCase().contains(motivo.toLowerCase())) {
